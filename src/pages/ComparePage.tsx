@@ -35,7 +35,6 @@ export function ComparePage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [zoomIn, setZoomIn] = useState(false);
-  const [normalize, setNormalize] = useState(true);
 
   const selectedIems = useMemo(
     () => readIds(searchParams.get("iem"), caps ? [caps.iems[0].id] : []),
@@ -80,6 +79,23 @@ export function ComparePage() {
     const raw: { meta: SeriesMeta; points: [number, number][] }[] = [];
     const series: SeriesMeta[] = [];
 
+    caps.targets
+      .filter((t) => t.id === targetId)
+      .forEach((meta) => {
+        const d = curves.get(meta.id);
+        if (!d) return;
+
+        const m = {
+          dashed: true,
+          label: meta.name,
+          color: TARGET_COLOR,
+          key: `target:${meta.id}`,
+        };
+
+        series.push(m);
+        raw.push({ meta: m, points: normalizeCurve(d) });
+      });
+
     caps.iems
       .filter((i) => selectedIems.includes(i.id))
       .forEach((meta, idx) => {
@@ -93,28 +109,15 @@ export function ComparePage() {
         };
 
         series.push(m);
-        raw.push({ meta: m, points: normalizeCurve(d, normalize) });
-      });
 
-    caps.targets
-      .filter((t) => t.id === targetId)
-      .forEach((meta) => {
-        const d = curves.get(meta.id);
-        if (!d) return;
-
-        const m = {
-          color: TARGET_COLOR,
-          label: meta.name,
-          key: `target:${meta.id}`,
-          dashed: true,
-        };
-
-        series.push(m);
-        raw.push({ meta: m, points: normalizeCurve(d, normalize) });
+        raw.push({
+          meta: m,
+          points: normalizeCurve(d, curves.get(targetId)),
+        });
       });
 
     return { series, data: mergeSeries(raw) };
-  }, [caps, selectedIems, targetId, normalize, curves]);
+  }, [caps, selectedIems, targetId, curves]);
 
   if (!caps) {
     return (
@@ -204,11 +207,6 @@ export function ComparePage() {
             />
           </label>
 
-          <label className="flex items-center justify-between gap-3 text-sm">
-            {t("compare.normalize", { hz: NORMALIZE_HZ })}
-            <Switch checked={normalize} onCheckedChange={setNormalize} />
-          </label>
-
           {error && (
             <p className="rounded-lg border border-destructive/41 bg-destructive/10 px-3 py-2 text-xs text-destructive">
               {error}
@@ -248,11 +246,10 @@ export function ComparePage() {
           <div className="relative min-h-0 flex-1 p-4">
             <Chart
               data={data}
-
               series={series}
               zoomInHighlight={zoomIn}
+              yTitle={t("compare.yRaw")}
               highlightRegions={highlightRegion}
-              yTitle={normalize ? t("compare.yNormalized") : t("compare.yRaw")}
             />
           </div>
         </main>

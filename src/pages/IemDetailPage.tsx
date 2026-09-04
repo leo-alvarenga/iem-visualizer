@@ -29,7 +29,13 @@ export function IemDetailPage() {
   const { curves, pending } = useCurves(metas);
 
   const { series, data, deviation } = useMemo(() => {
-    if (!iem) return { series: [] as SeriesMeta[], data: [] as ChartRow[], deviation: null };
+    if (!iem)
+      return {
+        series: [] as SeriesMeta[],
+        data: [] as ChartRow[],
+        deviation: null,
+      };
+
     const raw: { meta: SeriesMeta; points: [number, number][] }[] = [];
     const series: SeriesMeta[] = [];
 
@@ -39,14 +45,20 @@ export function IemDetailPage() {
 
     if (d) {
       const m = { key: "iem", label: iem.name, color: IEM_COLORS[0] };
+
       series.push(m);
-      raw.push({ meta: m, points: normalizeCurve(d, normalize) });
+      raw.push({ meta: m, points: normalizeCurve(d, normalize, td) });
     }
 
     if (target && td) {
-      const m = { key: "target", label: target.name, color: TARGET_COLOR, dashed: true };
+      const m = {
+        key: "target",
+        label: target.name,
+        color: TARGET_COLOR,
+      };
+
       series.push(m);
-      raw.push({ meta: m, points: normalizeCurve(td, normalize) });
+      raw.push({ meta: m, points: normalizeCurve(td, normalize, td) });
     }
 
     const deviation = d && td ? meanAbsDeviation(d, td) : null;
@@ -74,7 +86,10 @@ export function IemDetailPage() {
   }
 
   return (
-    <div className="reveal flex flex-1 flex-col gap-6" style={{ "--i": 0 } as CSSProperties}>
+    <div
+      className="reveal flex flex-1 flex-col gap-6"
+      style={{ "--i": 0 } as CSSProperties}
+    >
       <div className="flex flex-col gap-4">
         <Link
           to="/library"
@@ -92,7 +107,9 @@ export function IemDetailPage() {
             <p className="font-code text-xs uppercase tracking-[0.12em] text-(--color-muted)">
               {iem.brand}
             </p>
-            <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{iem.name}</h1>
+            <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
+              {iem.name}
+            </h1>
           </div>
           <Link
             to={`/?iem=${iem.id}`}

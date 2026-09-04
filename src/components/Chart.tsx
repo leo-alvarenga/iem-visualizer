@@ -1,5 +1,11 @@
 import { useTranslation } from "react-i18next";
-import { FREQ_MAX, FREQ_MIN, FREQ_RANGES, FREQ_TICKS } from "@/lib/constants";
+import {
+  DBS_TICKS,
+  FREQ_MAX,
+  FREQ_MIN,
+  FREQ_RANGES,
+  FREQ_TICKS,
+} from "@/lib/constants";
 import { IEM_COLORS } from "@/lib/palette";
 import type { NamedRange, RangeCategory } from "@/types";
 import {
@@ -12,6 +18,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  type TooltipPayloadEntry,
 } from "recharts";
 import type { Ref } from "react";
 
@@ -35,7 +42,7 @@ interface ChartProps {
 }
 
 function formatFreq(f: number): string {
-  return f >= 1000 ? `${f / 1000}k` : String(f);
+  return f >= 1000 ? `${(f / 1000).toFixed(3)}k` : String(f);
 }
 
 function getHighlightRange(
@@ -63,6 +70,39 @@ function getHighlightRange(
 
 function getRangeFromValue(value: number): NamedRange | undefined {
   return FREQ_RANGES.find((range) => value >= range.x1 && value <= range.x2);
+}
+
+function tooltipFormatter(data: ChartRow[], series: SeriesMeta[]) {
+  const isValid = (value: unknown) => !isNaN(Number(value));
+
+  return (value: unknown, name: string, item: TooltipPayloadEntry) => {
+    if (isValid(value)) return `${Number(value ?? 0).toFixed(2)} dB`;
+
+    try {
+      const f: number | null = item.payload?.f ?? null;
+      const key = series.find((s) => s.label === name)?.key;
+      const dataIndex = data.findIndex((d) => d.f === f);
+
+      let i = dataIndex;
+      let j = dataIndex + 1;
+      let val: number | null = null;
+
+      while (i >= 0 && j < data.length) {
+        val = data[i]?.[key] ?? data[j]?.[key];
+
+        if (isValid(val)) {
+          const finalIndex = val === data[i]?.[key] ? i : j;
+          return `${val.toFixed(2)} dB (@ ${formatFreq(data[finalIndex]?.f ?? 0)} Hz)`;
+        }
+
+        i--;
+        j++;
+      }
+    } catch (e) {
+      console.log(e);
+      return "N/A";
+    }
+  };
 }
 
 const tickStyle = { fontSize: 11 };
@@ -115,6 +155,7 @@ export function Chart({
           tickLine
           width={64}
           tick={tickStyle}
+          ticks={DBS_TICKS}
           tickFormatter={(v: number) => v.toFixed(0)}
           label={{
             angle: -90,
@@ -126,14 +167,16 @@ export function Chart({
         />
 
         <Tooltip
+          filterNull={false}
+          formatter={tooltipFormatter(data, series)}
+          labelStyle={{ color: "var(--color-muted)", marginBottom: 4 }}
+          cursor={{ stroke: "var(--color-muted)", strokeDasharray: "3 3" }}
           labelFormatter={(label) => {
             const f = Number(label);
             const range = getRangeFromValue(f);
+
             return `${formatFreq(f)} Hz${range ? ` - ${t(`ranges.${range.id}`)}` : ""}`;
           }}
-          labelStyle={{ color: "var(--color-muted)", marginBottom: 4 }}
-          cursor={{ stroke: "var(--color-muted)", strokeDasharray: "3 3" }}
-          formatter={(value: unknown) => `${Number(value ?? 0).toFixed(2)} dB`}
           contentStyle={{
             fontSize: 12,
             borderRadius: 0,
@@ -175,16 +218,16 @@ export function Chart({
           <Line
             key={s.key}
             dot={false}
+            connectNulls
             name={s.label}
             type="monotone"
             dataKey={s.key}
             strokeWidth={2}
             stroke={s.color}
-            connectNulls
-            strokeDasharray={s.dashed ? "6 4" : undefined}
             animationBegin={300}
             animationDuration={1000}
             animationEasing="ease-in-out"
+            strokeDasharray={s.dashed ? "6 4" : undefined}
           />
         ))}
       </LineChart>

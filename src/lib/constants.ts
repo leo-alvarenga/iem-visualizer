@@ -4,6 +4,8 @@ export const FREQ_MIN = 20;
 export const FREQ_MAX = 20000;
 export const NORMALIZE_HZ = 1000;
 
+export const DBS_TICKS = [30, 40, 50, 60, 80, 100];
+
 export const FREQ_TICKS = [
   30, 40, 50, 60, 80, 100, 150, 200, 300, 400, 500, 600, 800, 1000, 1500, 2000,
   3000, 4000, 5000, 6000, 8000, 10000, 15000, 20000,
