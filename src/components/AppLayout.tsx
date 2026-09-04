@@ -38,9 +38,11 @@ export function AppLayout() {
 
   const toggleLang = () => {
     const next = i18n.resolvedLanguage === "pt-BR" ? "en-US" : "pt-BR";
+
     document.documentElement.lang = next === "pt-BR" ? "pt" : "en";
     localStorage.setItem("lang", next);
-    void i18n.changeLanguage(next);
+
+    i18n.changeLanguage(next);
   };
 
   return (
@@ -55,8 +57,8 @@ export function AppLayout() {
           <span className="ml-auto flex items-center gap-3 sm:gap-6">
             {LINKS.map(({ to, key, end }) => (
               <NavLink
-                key={to}
                 to={to}
+                key={to}
                 end={end}
                 className={({ isActive }) =>
                   cn(
@@ -95,6 +97,7 @@ export function AppLayout() {
           <p className="font-code text-sm text-(--color-ink)">
             {t("footer.tagline")}
           </p>
+
           <p className="font-code text-xs text-(--color-muted)">
             {t("footer.source")}
           </p>

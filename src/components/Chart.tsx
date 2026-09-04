@@ -13,6 +13,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import type { Ref } from "react";
 
 export interface SeriesMeta {
   key: string;
@@ -28,6 +29,7 @@ interface ChartProps {
   yTitle: string;
   data: ChartRow[];
   series: SeriesMeta[];
+  ref?: Ref<HTMLDivElement>;
   zoomInHighlight?: boolean;
   highlightRegions?: string | RangeCategory;
 }
@@ -42,7 +44,8 @@ function getHighlightRange(
   if (!highlightRegions || highlightRegions.length === 0) return null;
 
   const ranges = FREQ_RANGES.filter(
-    (range) => highlightRegions === range.id || highlightRegions === range.category,
+    (range) =>
+      highlightRegions === range.id || highlightRegions === range.category,
   );
 
   if (ranges.length === 0) return null;
@@ -59,20 +62,18 @@ function getHighlightRange(
 }
 
 function getRangeFromValue(value: number): NamedRange | undefined {
-  return FREQ_RANGES.find(
-    (range) => value >= range.x1 && value <= range.x2,
-  );
+  return FREQ_RANGES.find((range) => value >= range.x1 && value <= range.x2);
 }
 
-
-const tickStyle = { fill: "var(--color-muted)", fontSize: 11 };
+const tickStyle = { fontSize: 11 };
 
 export function Chart({
+  ref,
   data,
   series,
   yTitle,
-  highlightRegions,
   zoomInHighlight,
+  highlightRegions,
 }: ChartProps) {
   const { t } = useTranslation();
   if (series.length === 0) {
@@ -84,7 +85,7 @@ export function Chart({
   }
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
+    <ResponsiveContainer ref={ref} width="100%" height="100%">
       <LineChart
         data={data}
         margin={{ top: 10, right: 20, bottom: 10, left: 0 }}
@@ -92,16 +93,16 @@ export function Chart({
         <CartesianGrid stroke="var(--color-rule)" strokeDasharray="3 3" />
 
         <XAxis
+          axisLine
+          tickLine
           dataKey="f"
           scale="log"
           type="number"
           tickMargin={8}
           tick={tickStyle}
-          tickLine={false}
           allowDataOverflow
           ticks={FREQ_TICKS}
           tickFormatter={formatFreq}
-          axisLine={{ stroke: "var(--color-rule)" }}
           domain={
             zoomInHighlight
               ? (getHighlightRange(highlightRegions) ?? [FREQ_MIN, FREQ_MAX])
@@ -110,17 +111,17 @@ export function Chart({
         />
 
         <YAxis
+          axisLine
+          tickLine
           width={64}
           tick={tickStyle}
-          tickLine={false}
-          axisLine={false}
           tickFormatter={(v: number) => v.toFixed(0)}
           label={{
             angle: -90,
             offset: 12,
             value: yTitle,
             position: "insideLeft",
-            style: { fill: "var(--color-muted)", fontSize: 12 },
+            style: { fontSize: 12 },
           }}
         />
 

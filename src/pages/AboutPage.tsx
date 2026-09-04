@@ -4,8 +4,12 @@ import { Trans, useTranslation } from "react-i18next";
 const LINKS = {
   autoEq: <a className="link" href="https://github.com/jaakkopasanen/AutoEq" />,
   squig: <a className="link" href="https://squig.link" />,
-  oratory: <a className="link" href="https://www.reddit.com/user/oratory1990/" />,
-  superReview: <a className="link" href="https://www.youtube.com/@superreview" />,
+  oratory: (
+    <a className="link" href="https://www.reddit.com/user/oratory1990/" />
+  ),
+  superReview: (
+    <a className="link" href="https://www.youtube.com/@superreview" />
+  ),
   code: <code className="font-code text-xs" />,
 };
 
@@ -41,16 +45,31 @@ export function AboutPage() {
       <Section index="03" title={t("about.creditsTitle")}>
         <ul className="flex flex-col gap-2 text-sm">
           <li>
-            <a className="link" href="https://squig.link">squig.link</a>: {t("about.credits.squig")}
+            <a className="link" href="https://squig.link">
+              squig.link
+            </a>
+            : {t("about.credits.squig")}
           </li>
+
           <li>
-            <a className="link" href="https://github.com/jaakkopasanen/AutoEq">AutoEq</a>: {t("about.credits.autoEq")}
+            <a className="link" href="https://github.com/jaakkopasanen/AutoEq">
+              AutoEq
+            </a>
+            : {t("about.credits.autoEq")}
           </li>
+
           <li>
-            <a className="link" href="https://www.reddit.com/user/oratory1990/">oratory1990</a>: {t("about.credits.oratory")}
+            <a className="link" href="https://www.reddit.com/user/oratory1990/">
+              oratory1990
+            </a>
+            : {t("about.credits.oratory")}
           </li>
+
           <li>
-            <a className="link" href="https://www.youtube.com/@superreview">Super Review</a>: {t("about.credits.superReview")}
+            <a className="link" href="https://www.youtube.com/@superreview">
+              Super Review
+            </a>
+            : {t("about.credits.superReview")}
           </li>
         </ul>
       </Section>

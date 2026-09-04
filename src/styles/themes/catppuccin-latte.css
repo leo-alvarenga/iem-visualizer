@@ -23,7 +23,7 @@
   --color-paper: var(--color-bg1);
   --color-paper-2: var(--color-bg2);
   --color-paper-3: var(--color-bg2);
-  --color-rule: var(--color-bg2);
+  --color-rule: var(--color-bg1);
   --color-neutral: var(--color-overlay0);
   --color-muted: var(--color-subtext-1);
   --color-ink: var(--color-text);

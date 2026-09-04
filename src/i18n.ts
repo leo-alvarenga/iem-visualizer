@@ -17,14 +17,14 @@ const resources = {
       },
       footer: {
         source:
-          "Frequency responses from AutoEq, mirrored from squig.link databases.",
-        tagline: "The instrument is dark. The data is yours.",
+          "Frequency responses from AutoEq, mirrored from squig.link databases",
+        tagline: "Remember: listen music, not the equipment you're using",
       },
       compare: {
         title: "Compare",
         subtitle:
-          "Overlay in-ear monitor frequency responses against a reference target. Normalizes at {{hz}} Hz by default.",
-        iemsLabel: "In-ear monitors",
+          "Visualize IEMs frequency responses against a reference target; Normalized at {{hz}} Hz by default",
+        iemsLabel: "IEMs",
         targetLabel: "Target curve",
         regionLabel: "Highlight region",
         zoomInRegionLabel: "Zoom in Highlight region",
@@ -34,7 +34,7 @@ const resources = {
         yRaw: "Amplitude (dB)",
       },
       chart: {
-        empty: "Select at least one IEM to plot.",
+        empty: "Select at least one IEM to plot the chart",
       },
       multiSelect: {
         none: "None selected",
@@ -43,7 +43,7 @@ const resources = {
       },
       library: {
         title: "Library",
-        count: "{{count}} in-ear monitors from the squig.link mirror.",
+        count: "{{count}} IEMs from the squig.link mirror",
         search: "Search brand or model",
       },
       detail: {
@@ -55,29 +55,29 @@ const resources = {
         type: "Type",
         deviation: "Harman deviation",
         deviationDesc:
-          "Mean absolute difference from the Harman 2019 target, 20 Hz - 10 kHz. Lower is closer to the target.",
-        notFound: "That IEM isn't in the library.",
+          "Mean absolute difference from the Harman 2019 target (20 Hz - 10 kHz). Lower is closer to the target",
+        notFound: "That IEM isn't in the library",
         backToLibrary: "Back to library",
       },
       ranges: {
         "sub-bass": "Sub-bass",
         "mid-bass": "Mid-bass",
         "lower-mid": "Lower midrange",
-        "upper-mid": "Upper midrange (clarity)",
+        "upper-mid": "Upper midrange (clarity feeling)",
         presence: "Presence",
-        "mid-treble": "Mid-treble (fatigue)",
+        "mid-treble": "Mid-treble (main cause of auditory fatigue)",
         air: "Upper treble (air)",
       },
       about: {
         title: "About",
         intro:
-          "A dark workbench for comparing in-ear monitor frequency responses.",
+          "A dark workbench for comparing in-ear monitor frequency responses",
         dataTitle: "Data",
         dataBody:
           "Curves come from the <autoEq>AutoEq</autoEq> project, which mirrors frequency response measurements published across the <squig>squig.link</squig> ecosystem. This build ships a curated snapshot of popular IEMs measured by <oratory>oratory1990</oratory> and <superReview>Super Review</superReview>, regenerated with <code>npm run data</code>.",
         methodTitle: "Method",
         methodBody1:
-          "All curves are raw on-ear coupler measurements on IEC 60318-4 rigs (GRAS RA0045 or 711-style), plotted on a logarithmic frequency axis from 20 Hz to 20 kHz. Normalization shifts each curve so it reads 0 dB at 1 kHz, which is how squig.link compares relative tonality; absolute SPL is not shown.",
+          "All curves are raw on-ear coupler measurements on IEC 60318-4 rigs (GRAS RA0045 or 711-style), plotted on a logarithmic frequency axis from 20 Hz to 20 kHz. Normalization shifts each curve so it reads 0 dB at 1 kHz, which is how squig.link compares relative tonality; absolute SPL is not shown",
         methodBody2:
           "The reference line is the Harman 2019 in-ear target. A frequency response is not the whole story: fit, seal, unit variation, and rig differences all move these curves.",
         creditsTitle: "Credits",
@@ -104,15 +104,14 @@ const resources = {
         lang: "Trocar idioma",
       },
       footer: {
-        source:
-          "Respostas de frequência do AutoEq, espelhadas das bases do squig.link.",
-        tagline: "O instrumento é escuro. Os dados são seus.",
+        source: "Respostas de frequência do AutoEq, obtidas do squig.link",
+        tagline: "Lembre-se: ouça música, não o equipamento que está usando",
       },
       compare: {
         title: "Comparar",
         subtitle:
-          "Sobreponha respostas de frequência de fones intra-auriculares contra uma curva de referência. Normaliza em {{hz}} Hz por padrão.",
-        iemsLabel: "Fones intra-auriculares",
+          "Visualize respostas de frequência de fones intra-auriculares contra uma curva de referência; Normalizas em {{hz}} Hz por padrão",
+        iemsLabel: "IEMs",
         targetLabel: "Curva alvo",
         regionLabel: "Destacar região",
         zoomInRegionLabel: "Zoom na região de destaque",
@@ -122,7 +121,7 @@ const resources = {
         yRaw: "Amplitude (dB)",
       },
       chart: {
-        empty: "Selecione ao menos um fone para plotar.",
+        empty: "Selecione ao menos um fone para plotar o gráfico",
       },
       multiSelect: {
         none: "Nenhum selecionado",
@@ -131,7 +130,7 @@ const resources = {
       },
       library: {
         title: "Biblioteca",
-        count: "{{count}} fones intra-auriculares do espelho do squig.link.",
+        count: "{{count}} IEMs do squig.link",
         search: "Buscar marca ou modelo",
       },
       detail: {
@@ -141,19 +140,19 @@ const resources = {
         source: "Fonte",
         rig: "Rig",
         type: "Tipo",
-        deviation: "Desvio Harman",
+        deviation: "Curva Harman",
         deviationDesc:
-          "Diferença absoluta média em relação ao alvo Harman 2019, 20 Hz - 10 kHz. Quanto menor, mais próximo do alvo.",
-        notFound: "Esse fone não está na biblioteca.",
+          "Diferença absoluta média em relação à curva alvo Harman 2019 (20 Hz - 10 kHz). Quanto menor, mais próximo do alvo.",
+        notFound: "Esse fone não está na biblioteca",
         backToLibrary: "Voltar para a biblioteca",
       },
       ranges: {
         "sub-bass": "Sub-graves",
         "mid-bass": "Médio-graves",
         "lower-mid": "Médios inferiores",
-        "upper-mid": "Médios superiores (clareza)",
+        "upper-mid": "Médios superiores (sensação de claridade)",
         presence: "Presença",
-        "mid-treble": "Agudos médios (fadiga)",
+        "mid-treble": "Agudos médios (causadores da sensação de fadiga)",
         air: "Agudos superiores (ar)",
       },
       about: {

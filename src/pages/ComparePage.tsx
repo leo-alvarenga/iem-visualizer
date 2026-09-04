@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties } from "react";
+import { useMemo, useRef, useState, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
 import { Chart, type ChartRow, type SeriesMeta } from "@/components/Chart";
@@ -17,6 +17,8 @@ import { useCurves } from "@/hooks/useCurves";
 import { FREQ_RANGES, NORMALIZE_HZ } from "@/lib/constants";
 import { mergeSeries, normalizeCurve } from "@/lib/normalize";
 import { IEM_COLORS, TARGET_COLOR } from "@/lib/palette";
+import { useFullscreen } from "@/hooks/useFullscreen";
+import { Maximize, Minimize } from "lucide-react";
 
 function readIds(param: string | null, fallback: string[]): string[] {
   if (param === null) return fallback;
@@ -25,6 +27,9 @@ function readIds(param: string | null, fallback: string[]): string[] {
 }
 
 export function ComparePage() {
+  const chartRef = useRef<HTMLDivElement>(null);
+  const { toggle, isFullscreen } = useFullscreen(chartRef);
+
   const { t } = useTranslation();
   const { caps, error } = useCapabilities();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -205,29 +210,45 @@ export function ComparePage() {
           </label>
 
           {error && (
-            <p className="rounded-lg border border-(--color-destructive)/40 bg-(--color-destructive)/10 px-3 py-2 text-xs text-(--color-destructive)">
+            <p className="rounded-lg border border-destructive/41 bg-destructive/10 px-3 py-2 text-xs text-destructive">
               {error}
             </p>
           )}
         </aside>
 
-        <main className="flex min-h-105 min-w-0 flex-1 flex-col border border-(--color-rule) bg-(--color-paper-3)">
+        <main
+          ref={chartRef}
+          className="flex min-h-105 min-w-0 flex-1 flex-col border border-(--color-rule) bg-(--color-paper-3)"
+        >
           <div className="flex items-center gap-2 border-b border-(--color-rule) px-4 py-2 font-code text-xs text-(--color-muted)">
             <span className="text-(--color-accent)">$</span>
             <span>graph</span>
-            {pending && (
-              <span className="ml-auto flex items-center gap-2">
-                <span
-                  className="size-1.5 bg-(--color-accent) animate-blink"
-                  aria-hidden
-                />
-                <span>{t("common.loading")}</span>
-              </span>
-            )}
+
+            <span className="ml-auto flex items-center gap-2">
+              {pending && (
+                <>
+                  <span
+                    className="size-1.5 bg-(--color-accent) animate-blink"
+                    aria-hidden
+                  />
+
+                  <span>{t("common.loading")}</span>
+                </>
+              )}
+
+              <button
+                onClick={toggle}
+                className="cursor-pointer p-2 bg-(--color-bg1) hover:bg-(--color-bg2) duration-300 transition-colors"
+              >
+                {isFullscreen ? <Minimize /> : <Maximize />}
+              </button>
+            </span>
           </div>
+
           <div className="relative min-h-0 flex-1 p-4">
             <Chart
               data={data}
+
               series={series}
               zoomInHighlight={zoomIn}
               highlightRegions={highlightRegion}
@@ -239,7 +260,6 @@ export function ComparePage() {
     </div>
   );
 }
-
 
 function Field({
   label,
