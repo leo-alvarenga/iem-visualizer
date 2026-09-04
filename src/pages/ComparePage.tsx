@@ -133,8 +133,11 @@ export function ComparePage() {
       className="reveal flex flex-1 flex-col gap-6"
       style={{ "--i": 0 } as CSSProperties}
     >
-      <header className="flex flex-col gap-1">
-        <h1 className="text-2xl font-semibold tracking-tight">
+      <header className="flex flex-col gap-3">
+        <span className="font-code text-sm tracking-[0.2em] text-(--color-accent)">
+          ~/compare
+        </span>
+        <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
           {t("compare.title")}
         </h1>
         <p className="max-w-xl text-sm text-(--color-muted)">
@@ -208,20 +211,29 @@ export function ComparePage() {
           )}
         </aside>
 
-        <main className="surface relative min-h-105 min-w-0 flex-1 p-4">
-          <Chart
-            data={data}
-            series={series}
-            zoomInHighlight={zoomIn}
-            highlightRegions={highlightRegion}
-            yTitle={normalize ? t("compare.yNormalized") : t("compare.yRaw")}
-          />
-
-          {pending && (
-            <span className="absolute right-5 top-5 text-xs text-(--color-muted)">
-              {t("common.loading")}
-            </span>
-          )}
+        <main className="flex min-h-105 min-w-0 flex-1 flex-col border border-(--color-rule) bg-(--color-paper-3)">
+          <div className="flex items-center gap-2 border-b border-(--color-rule) px-4 py-2 font-code text-xs text-(--color-muted)">
+            <span className="text-(--color-accent)">$</span>
+            <span>graph</span>
+            {pending && (
+              <span className="ml-auto flex items-center gap-2">
+                <span
+                  className="size-1.5 bg-(--color-accent) animate-blink"
+                  aria-hidden
+                />
+                <span>{t("common.loading")}</span>
+              </span>
+            )}
+          </div>
+          <div className="relative min-h-0 flex-1 p-4">
+            <Chart
+              data={data}
+              series={series}
+              zoomInHighlight={zoomIn}
+              highlightRegions={highlightRegion}
+              yTitle={normalize ? t("compare.yNormalized") : t("compare.yRaw")}
+            />
+          </div>
         </main>
       </div>
     </div>
@@ -238,7 +250,7 @@ function Field({
 }) {
   return (
     <div className="space-y-1.5">
-      <span className="text-xs font-medium tracking-wide text-(--color-muted) uppercase">
+      <span className="font-code text-xs uppercase tracking-[0.2em] text-(--color-muted)">
         {label}
       </span>
       {children}

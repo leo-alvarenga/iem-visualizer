@@ -155,7 +155,7 @@ async function main() {
       console.log(`  ok  ${n}`);
       ok += 1;
     } catch (e) {
-      console.warn(`  SKIP ${n} — ${e.message}`);
+      console.warn(`  SKIP ${n}: ${e.message}`);
       failed += 1;
     }
   }

@@ -55,7 +55,7 @@ const resources = {
         type: "Type",
         deviation: "Harman deviation",
         deviationDesc:
-          "Mean absolute difference from the Harman 2019 target, 20 Hz – 10 kHz. Lower is closer to the target.",
+          "Mean absolute difference from the Harman 2019 target, 20 Hz - 10 kHz. Lower is closer to the target.",
         notFound: "That IEM isn't in the library.",
         backToLibrary: "Back to library",
       },
@@ -77,7 +77,7 @@ const resources = {
           "Curves come from the <autoEq>AutoEq</autoEq> project, which mirrors frequency response measurements published across the <squig>squig.link</squig> ecosystem. This build ships a curated snapshot of popular IEMs measured by <oratory>oratory1990</oratory> and <superReview>Super Review</superReview>, regenerated with <code>npm run data</code>.",
         methodTitle: "Method",
         methodBody1:
-          "All curves are raw on-ear coupler measurements on IEC 60318-4 rigs (GRAS RA0045 or 711-style), plotted on a logarithmic frequency axis from 20 Hz to 20 kHz. Normalization shifts each curve so it reads 0 dB at 1 kHz, which is how squig.link compares relative tonality — absolute SPL is not shown.",
+          "All curves are raw on-ear coupler measurements on IEC 60318-4 rigs (GRAS RA0045 or 711-style), plotted on a logarithmic frequency axis from 20 Hz to 20 kHz. Normalization shifts each curve so it reads 0 dB at 1 kHz, which is how squig.link compares relative tonality; absolute SPL is not shown.",
         methodBody2:
           "The reference line is the Harman 2019 in-ear target. A frequency response is not the whole story: fit, seal, unit variation, and rig differences all move these curves.",
         creditsTitle: "Credits",
@@ -143,7 +143,7 @@ const resources = {
         type: "Tipo",
         deviation: "Desvio Harman",
         deviationDesc:
-          "Diferença absoluta média em relação ao alvo Harman 2019, 20 Hz – 10 kHz. Quanto menor, mais próximo do alvo.",
+          "Diferença absoluta média em relação ao alvo Harman 2019, 20 Hz - 10 kHz. Quanto menor, mais próximo do alvo.",
         notFound: "Esse fone não está na biblioteca.",
         backToLibrary: "Voltar para a biblioteca",
       },
@@ -165,7 +165,7 @@ const resources = {
           "As curvas vêm do projeto <autoEq>AutoEq</autoEq>, que espelha medições publicadas no ecossistema <squig>squig.link</squig>. Esta build traz um recorte de fones populares medidos por <oratory>oratory1990</oratory> e <superReview>Super Review</superReview>, regenerado com <code>npm run data</code>.",
         methodTitle: "Método",
         methodBody1:
-          "Todas as curvas são medições cruas em acopladores IEC 60318-4 (GRAS RA0045 ou estilo 711), plotadas em eixo de frequência logarítmico de 20 Hz a 20 kHz. A normalização desloca cada curva para 0 dB em 1 kHz, que é como o squig.link compara tonalidade relativa — SPL absoluto não é exibido.",
+          "Todas as curvas são medições cruas em acopladores IEC 60318-4 (GRAS RA0045 ou estilo 711), plotadas em eixo de frequência logarítmico de 20 Hz a 20 kHz. A normalização desloca cada curva para 0 dB em 1 kHz, que é como o squig.link compara tonalidade relativa; SPL absoluto não é exibido.",
         methodBody2:
           "A linha de referência é o alvo Harman 2019 in-ear. Resposta de frequência não é a história toda: encaixe, vedação, variação de unidade e diferenças de rig movem essas curvas.",
         creditsTitle: "Créditos",

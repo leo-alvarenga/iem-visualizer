@@ -48,7 +48,7 @@ export function MultiSelect({
 
   return (
     <div>
-      <span className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
+      <span className="font-code text-xs uppercase tracking-[0.2em] text-(--color-muted)">
         {label}
       </span>
 

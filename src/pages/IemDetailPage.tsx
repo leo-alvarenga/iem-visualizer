@@ -86,14 +86,17 @@ export function IemDetailPage() {
 
         <header className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex flex-col gap-1">
-            <p className="font-outlier text-xs uppercase tracking-[0.12em] text-(--color-accent)">
+            <span className="font-code text-sm tracking-[0.2em] text-(--color-accent)">
+              ~/iem/{iem.id}
+            </span>
+            <p className="font-code text-xs uppercase tracking-[0.12em] text-(--color-muted)">
               {iem.brand}
             </p>
-            <h1 className="text-3xl font-semibold tracking-tight">{iem.name}</h1>
+            <h1 className="text-3xl font-bold tracking-tight md:text-4xl">{iem.name}</h1>
           </div>
           <Link
             to={`/?iem=${iem.id}`}
-            className="w-fit rounded-full border border-[var(--color-rule)] bg-[var(--color-paper-2)] px-4 py-2 text-sm transition-colors hover:border-[var(--color-accent)]"
+            className="w-fit border border-(--color-rule) px-4 py-2 text-sm transition-colors hover:border-(--color-accent) hover:text-(--color-accent)"
           >
             {t("detail.openCompare")}
           </Link>
@@ -101,17 +104,27 @@ export function IemDetailPage() {
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col gap-4 lg:flex-row">
-        <main className="surface relative min-h-[420px] min-w-0 flex-1 p-4">
-          <Chart
-            data={data}
-            series={series}
-            yTitle={normalize ? t("compare.yNormalized") : t("compare.yRaw")}
-          />
-          {pending && (
-            <span className="absolute right-5 top-5 text-xs text-(--color-muted)">
-              {t("common.loading")}
-            </span>
-          )}
+        <main className="flex min-h-[420px] min-w-0 flex-1 flex-col border border-(--color-rule) bg-(--color-paper-3)">
+          <div className="flex items-center gap-2 border-b border-(--color-rule) px-4 py-2 font-code text-xs text-(--color-muted)">
+            <span className="text-(--color-accent)">$</span>
+            <span>graph</span>
+            {pending && (
+              <span className="ml-auto flex items-center gap-2">
+                <span
+                  className="size-1.5 bg-(--color-accent) animate-blink"
+                  aria-hidden
+                />
+                <span>{t("common.loading")}</span>
+              </span>
+            )}
+          </div>
+          <div className="relative min-h-0 flex-1 p-4">
+            <Chart
+              data={data}
+              series={series}
+              yTitle={normalize ? t("compare.yNormalized") : t("compare.yRaw")}
+            />
+          </div>
         </main>
 
         <aside className="flex shrink-0 flex-col gap-4 lg:w-72">
@@ -123,11 +136,11 @@ export function IemDetailPage() {
           </div>
 
           <div className="surface flex flex-col gap-3 p-4">
-            <span className="text-xs font-medium uppercase tracking-wide text-(--color-muted)">
+            <span className="font-code text-xs uppercase tracking-[0.2em] text-(--color-muted)">
               {t("detail.deviation")}
             </span>
-            <p className="font-outlier text-3xl tabular text-(--color-ink)">
-              {deviation !== null ? `${deviation.toFixed(2)} dB` : "—"}
+            <p className="font-code text-3xl tabular text-(--color-ink)">
+              {deviation !== null ? `${deviation.toFixed(2)} dB` : "-"}
             </p>
             <p className="text-xs text-(--color-muted)">
               {t("detail.deviationDesc")}
@@ -147,7 +160,7 @@ export function IemDetailPage() {
 function Meta({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-3">
-      <span className="text-xs text-(--color-muted)">{label}</span>
+      <span className="font-code text-xs text-(--color-muted)">{label}</span>
       <span className="text-sm text-(--color-ink)">{value}</span>
     </div>
   );

@@ -1,7 +1,7 @@
 # IEM Graph Visualizer
 
-Dark, client-side tool for comparing in-ear monitor frequency responses
-against reference targets — squig.link style. No backend: data is fetched
+Client-side tool for comparing in-ear monitor frequency responses
+against reference targets (squig.link style). No backend: data is fetched
 from `/public/data/*.json`.
 
 ## Stack
@@ -10,7 +10,8 @@ from `/public/data/*.json`.
 - i18n via react-i18next (pt-BR · en-US)
 - Tailwind CSS v4 + shadcn/ui
 - Recharts for log-scale frequency-response plots
-- Hallmark atmospheric design system (tokens in `src/index.css`)
+- Catppuccin-inspired theme system (Mocha, Kanagawa Wave, Latte),
+  Space Grotesk + Source Code Pro
 
 ## Run
 
@@ -46,10 +47,10 @@ public/data/
 
 ## Pages
 
-- `/` — compare IEMs against a target, 1 kHz normalization, shareable URL
-- `/library` — searchable brand-grouped catalog
-- `/iem/:id` — single IEM vs Harman target, deviation stat
-- `/about` — data provenance and credits
+- `/` - compare IEMs against a target, 1 kHz normalization, shareable URL
+- `/library` - searchable brand-grouped catalog
+- `/iem/:id` - single IEM vs Harman target, deviation stat
+- `/about` - data provenance and credits
 
 ## Credits
 

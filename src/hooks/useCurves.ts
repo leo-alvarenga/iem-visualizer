@@ -4,7 +4,7 @@ import type { FrData } from "@/types";
 
 type Meta = { id: string; file: string };
 
-// Effect re-fires whenever the `metas` array identity changes — memoize it.
+// Effect re-fires whenever the `metas` array identity changes; memoize it.
 export function useCurves(metas: Meta[]) {
   const [curves, setCurves] = useState<Map<string, FrData>>(new Map());
 

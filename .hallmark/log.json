@@ -6,6 +6,15 @@
     "enrichment": "none",
     "nav": "N5 Floating pill",
     "footer": "Ft5 Statement",
-    "brief": "IEM Graph Visualizer — dark FR comparison workbench"
+    "brief": "IEM Graph Visualizer: dark FR comparison workbench"
+  },
+  {
+    "date": "2026-09-10",
+    "macrostructure": "Workbench",
+    "theme": "Catppuccin Mocha / Kanagawa Wave / Latte",
+    "typeface": "Space Grotesk + Source Code Pro",
+    "nav": "Terminal bar (mono links, underline active)",
+    "footer": "Centered mono statement",
+    "brief": "Redesign following leoalvarenga.dev: squared corners, hairline borders, terminal chart panels, theme switcher"
   }
 ]

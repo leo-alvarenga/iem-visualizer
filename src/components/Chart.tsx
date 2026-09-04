@@ -135,7 +135,7 @@ export function Chart({
           formatter={(value: unknown) => `${Number(value ?? 0).toFixed(2)} dB`}
           contentStyle={{
             fontSize: 12,
-            borderRadius: 8,
+            borderRadius: 0,
             border: "1px solid var(--color-rule)",
             backgroundColor: "var(--color-paper-2)",
           }}

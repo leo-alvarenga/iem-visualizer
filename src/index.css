@@ -1,9 +1,11 @@
-/* Hallmark · genre: atmospheric · macrostructure: Workbench · theme: Midnight (atmospheric) · enrichment: none · nav: N5 · footer: Ft5 */
-/* Hallmark · pre-emit critique: P5 H4 E4 S4 R5 V5 */
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+
+@import "./styles/themes/catppuccin-mocha.css";
+@import "./styles/themes/kanagawa.css";
+@import "./styles/themes/catppuccin-latte.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -13,17 +15,17 @@ body,
   height: 100%;
 }
 
-html {
-  overflow-x: clip;
-}
-
+html,
 body {
   overflow-x: clip;
 }
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: "Geist Variable", sans-serif;
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-code: "Source Code Pro", ui-monospace, "SF Mono", Menlo, monospace;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -62,46 +64,26 @@ body {
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --animate-blink: blink 1s infinite;
+
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
 }
 
 :root {
   color-scheme: dark;
 
-  /* Hallmark · midnight anchor (warm hue 40) */
-  --color-paper: oklch(14% 0.008 40);
-  --color-paper-2: oklch(18% 0.01 40);
-  --color-paper-3: oklch(23% 0.01 40);
-  --color-rule: oklch(30% 0.008 40);
-  --color-neutral: oklch(58% 0.008 40);
-  --color-muted: oklch(72% 0.006 40);
-  --color-ink: oklch(94% 0.006 80);
-  --color-accent: oklch(0.7 0.19 45);
-  --color-focus: oklch(0.72 0.19 55);
+  /* Sharp corners: the reference palette reads squared, not pill-rounded. */
+  --radius: 0;
 
-  /* FR chart series — data-encoding hues, tuned for a dark canvas */
-  --series-1: oklch(0.72 0.16 250);
-  --series-2: oklch(0.72 0.19 45);
-  --series-3: oklch(0.72 0.17 145);
-  --series-4: oklch(0.68 0.18 310);
-  --series-5: oklch(0.75 0.17 360);
-  --series-6: oklch(0.72 0.15 210);
-  --series-7: oklch(0.78 0.14 85);
-  --series-8: oklch(0.7 0.12 290);
-  --series-target: oklch(0.85 0.005 40);
-
-  /* Type — major third (1.25), 16px base */
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-md: 1.25rem;
-  --text-lg: 1.5625rem;
-  --text-xl: 1.9531rem;
-  --text-2xl: 2.4414rem;
-  --text-3xl: 3.0518rem;
-  --text-4xl: 3.8147rem;
-  --text-display: clamp(2.5rem, 5vw + 1rem, 5rem);
-
-  /* Space — 4pt scale */
+  /* Space - 4pt scale */
   --space-3xs: 0.125rem;
   --space-2xs: 0.25rem;
   --space-xs: 0.5rem;
@@ -112,11 +94,6 @@ body {
   --space-2xl: 4rem;
   --space-3xl: 6rem;
   --space-4xl: 9rem;
-
-  /* Fonts — Geist (display + body) + system mono (outlier register) */
-  --font-display: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-outlier: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
 
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -134,40 +111,29 @@ body {
   --z-modal: 400;
   --z-toast: 500;
   --z-tooltip: 600;
+}
 
-  /* shadcn surface roles mapped onto the Hallmark tokens */
-  --background: var(--color-paper);
-  --foreground: var(--color-ink);
-  --card: var(--color-paper-2);
-  --card-foreground: var(--color-ink);
-  --popover: var(--color-paper-2);
-  --popover-foreground: var(--color-ink);
-  --primary: var(--color-ink);
-  --primary-foreground: var(--color-paper);
-  --secondary: var(--color-paper-3);
-  --secondary-foreground: var(--color-ink);
-  --muted: var(--color-paper-3);
-  --muted-foreground: var(--color-muted);
-  --accent: var(--color-paper-3);
-  --accent-foreground: var(--color-ink);
-  --destructive: oklch(0.63 0.2 25);
-  --border: var(--color-rule);
-  --input: var(--color-rule);
-  --ring: var(--color-accent);
-  --chart-1: var(--series-1);
-  --chart-2: var(--series-2);
-  --chart-3: var(--series-3);
-  --chart-4: var(--series-4);
-  --chart-5: var(--series-5);
-  --radius: 0.625rem;
-  --sidebar: var(--color-paper-2);
-  --sidebar-foreground: var(--color-ink);
-  --sidebar-primary: var(--color-ink);
-  --sidebar-primary-foreground: var(--color-paper);
-  --sidebar-accent: var(--color-paper-3);
-  --sidebar-accent-foreground: var(--color-ink);
-  --sidebar-border: var(--color-rule);
-  --sidebar-ring: var(--color-accent);
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-muted);
 }
 
 @layer base {
@@ -178,18 +144,6 @@ body {
   body {
     @apply bg-background text-foreground antialiased;
     font-family: var(--font-body);
-    background-image:
-      radial-gradient(
-        60% 40% at 12% -4%,
-        oklch(0.7 0.19 45 / 0.12),
-        transparent 70%
-      ),
-      radial-gradient(
-        50% 36% at 95% 104%,
-        oklch(0.55 0.16 20 / 0.1),
-        transparent 70%
-      );
-    background-attachment: fixed;
   }
 
   h1,
@@ -210,7 +164,7 @@ body {
   }
 }
 
-/* Page-load orchestration — one fade sequence, staggered by DOM index */
+/* Page-load orchestration: one fade sequence, staggered by DOM index */
 .reveal {
   opacity: 0;
   transform: translateY(8px);
@@ -225,16 +179,15 @@ body {
   }
 }
 
-/* Elevated surface — atmospheric uses lighter-on-dark elevation, not hairlines */
+/* Raised surface: hairline border over the page background */
 .surface {
   background: var(--color-paper-2);
   border: 1px solid var(--color-rule);
-  border-radius: var(--radius-lg);
 }
 
 /* Mono register: wordmark, axis labels, stat numerals */
-.font-outlier {
-  font-family: var(--font-outlier);
+.font-code {
+  font-family: var(--font-code);
   font-variant-numeric: tabular-nums;
 }
 
@@ -251,6 +204,19 @@ body {
 .link:hover {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+.animated-overlay {
+  animation: fadeInArea 1s ease-out forwards;
+}
+
+@keyframes fadeInArea {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -271,18 +237,5 @@ body {
       opacity: 1;
       transform: none;
     }
-  }
-}
-
-.animated-overlay {
-  animation: fadeInArea 1s ease-out forwards;
-}
-
-@keyframes fadeInArea {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }

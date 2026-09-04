@@ -1,0 +1,75 @@
+.theme-latte {
+  --color-bg1: #eff1f5;
+  --color-bg2: #e6e9ef;
+  --color-bg3: #dce0e8;
+
+  --color-accent: #8839ef;
+  --color-accent1: #8839ef;
+  --color-accent2: #fe640b;
+  --color-accent3: #1e66f5;
+  --color-accent4: #dd7878;
+
+  --color-error: #d20f39;
+  --color-success: #40a02b;
+  --color-warning: #df8e1d;
+
+  --color-text: #4c4f69;
+  --color-subtext-1: #5c5f77;
+
+  --color-surface0: #ccd0da;
+  --color-overlay0: #9ca0b0;
+
+  /* app roles */
+  --color-paper: var(--color-bg1);
+  --color-paper-2: var(--color-bg2);
+  --color-paper-3: var(--color-bg2);
+  --color-rule: var(--color-bg2);
+  --color-neutral: var(--color-overlay0);
+  --color-muted: var(--color-subtext-1);
+  --color-ink: var(--color-text);
+  --color-focus: var(--color-accent3);
+
+  /* FR chart series */
+  --series-1: #8839ef;
+  --series-2: #fe640b;
+  --series-3: #1e66f5;
+  --series-4: #dd7878;
+  --series-5: #40a02b;
+  --series-6: #179299;
+  --series-7: #ea76cb;
+  --series-8: #7287fd;
+  --series-target: var(--color-text);
+
+  /* shadcn roles */
+  --background: var(--color-bg1);
+  --foreground: var(--color-text);
+  --card: var(--color-bg2);
+  --card-foreground: var(--color-text);
+  --popover: var(--color-bg2);
+  --popover-foreground: var(--color-text);
+  --primary: var(--color-accent1);
+  --primary-foreground: var(--color-bg1);
+  --secondary: var(--color-bg2);
+  --secondary-foreground: var(--color-text);
+  --muted: var(--color-bg2);
+  --muted-foreground: var(--color-subtext-1);
+  --accent: var(--color-bg2);
+  --accent-foreground: var(--color-text);
+  --destructive: var(--color-error);
+  --border: var(--color-bg2);
+  --input: var(--color-bg2);
+  --ring: var(--color-accent1);
+  --chart-1: var(--series-1);
+  --chart-2: var(--series-2);
+  --chart-3: var(--series-3);
+  --chart-4: var(--series-4);
+  --chart-5: var(--series-5);
+  --sidebar: var(--color-bg2);
+  --sidebar-foreground: var(--color-text);
+  --sidebar-primary: var(--color-accent1);
+  --sidebar-primary-foreground: var(--color-bg1);
+  --sidebar-accent: var(--color-bg2);
+  --sidebar-accent-foreground: var(--color-text);
+  --sidebar-border: var(--color-bg2);
+  --sidebar-ring: var(--color-accent1);
+}
