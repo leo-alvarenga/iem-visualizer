@@ -14,7 +14,7 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { useCapabilities } from "@/hooks/useCapabilities";
 import { useCurves } from "@/hooks/useCurves";
-import { FREQ_RANGES, NORMALIZE_HZ } from "@/lib/constants";
+import { FREQ_RANGES } from "@/lib/constants";
 import { mergeSeries, normalizeCurve } from "@/lib/normalize";
 import { IEM_COLORS, TARGET_COLOR } from "@/lib/palette";
 import { useFullscreen } from "@/hooks/useFullscreen";

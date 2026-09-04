@@ -21,6 +21,7 @@ import {
   type TooltipPayloadEntry,
 } from "recharts";
 import { useState, type Ref } from "react";
+import type { NameType } from "recharts/types/component/DefaultTooltipContent";
 
 export interface SeriesMeta {
   key: string;
@@ -75,13 +76,19 @@ function getRangeFromValue(value: number): NamedRange | undefined {
 function tooltipFormatter(data: ChartRow[], series: SeriesMeta[]) {
   const isValid = (value: unknown) => !isNaN(Number(value));
 
-  return (value: unknown, name: string, item: TooltipPayloadEntry) => {
+  return (value: unknown, name?: NameType, item?: TooltipPayloadEntry) => {
     if (isValid(value)) return `${Number(value ?? 0).toFixed(2)} dB`;
 
     try {
+      if (!item || !name) throw new Error("Invalid data");
+
       const f: number | null = item.payload?.f ?? null;
       const key = series.find((s) => s.label === name)?.key;
       const dataIndex = data.findIndex((d) => d.f === f);
+
+      if (!key || typeof dataIndex !== "number") {
+        throw new Error("Invalid data");
+      }
 
       let i = dataIndex;
       let j = dataIndex + 1;
@@ -102,6 +109,8 @@ function tooltipFormatter(data: ChartRow[], series: SeriesMeta[]) {
       console.log(e);
       return "N/A";
     }
+
+    return "N/A";
   };
 }
 
@@ -238,7 +247,7 @@ export function Chart({
             name={s.label}
             type="natural"
             dataKey={s.key}
-            strokeWidth={3}
+            strokeWidth={2}
             stroke={s.color}
             cursor="pointer"
             activeDot={false}
