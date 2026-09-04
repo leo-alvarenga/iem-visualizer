@@ -1,0 +1,434 @@
+{
+  "iems": [
+    {
+      "id": "7hz-salnotes-dioko",
+      "name": "7Hz Salnotes Dioko",
+      "brand": "7Hz",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/7hz-salnotes-dioko.json"
+    },
+    {
+      "id": "7hz-salnotes-zero",
+      "name": "7Hz Salnotes Zero",
+      "brand": "7Hz",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/7hz-salnotes-zero.json"
+    },
+    {
+      "id": "7hz-salnotes-zero-2",
+      "name": "7Hz Salnotes Zero:2",
+      "brand": "7Hz",
+      "source": "Super Review",
+      "rig": "IEC 60318-4 (711 coupler)",
+      "form": "in-ear",
+      "file": "/data/iems/7hz-salnotes-zero-2.json"
+    },
+    {
+      "id": "7hz-timeless",
+      "name": "7Hz Timeless",
+      "brand": "7Hz",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/7hz-timeless.json"
+    },
+    {
+      "id": "blon-bl-03",
+      "name": "BLON BL-03",
+      "brand": "BLON",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/blon-bl-03.json"
+    },
+    {
+      "id": "campfire-audio-andromeda",
+      "name": "Campfire Audio Andromeda",
+      "brand": "Campfire Audio",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/campfire-audio-andromeda.json"
+    },
+    {
+      "id": "campfire-audio-vega-foam-eartips",
+      "name": "Campfire Audio Vega (foam eartips)",
+      "brand": "Campfire Audio",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/campfire-audio-vega-foam-eartips.json"
+    },
+    {
+      "id": "etymotic-er2se",
+      "name": "Etymotic ER2SE",
+      "brand": "Etymotic",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/etymotic-er2se.json"
+    },
+    {
+      "id": "etymotic-er2xr",
+      "name": "Etymotic ER2XR",
+      "brand": "Etymotic",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/etymotic-er2xr.json"
+    },
+    {
+      "id": "etymotic-er4sr",
+      "name": "Etymotic ER4SR",
+      "brand": "Etymotic",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/etymotic-er4sr.json"
+    },
+    {
+      "id": "etymotic-er4xr",
+      "name": "Etymotic ER4XR",
+      "brand": "Etymotic",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/etymotic-er4xr.json"
+    },
+    {
+      "id": "final-audio-a8000",
+      "name": "Final Audio A8000",
+      "brand": "Final Audio",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/final-audio-a8000.json"
+    },
+    {
+      "id": "final-audio-e1000",
+      "name": "Final Audio E1000",
+      "brand": "Final Audio",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/final-audio-e1000.json"
+    },
+    {
+      "id": "final-audio-e5000",
+      "name": "Final Audio E5000",
+      "brand": "Final Audio",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/final-audio-e5000.json"
+    },
+    {
+      "id": "kiwi-ears-cadenza",
+      "name": "Kiwi Ears Cadenza",
+      "brand": "Kiwi Ears",
+      "source": "Super Review",
+      "rig": "IEC 60318-4 (711 coupler)",
+      "form": "in-ear",
+      "file": "/data/iems/kiwi-ears-cadenza.json"
+    },
+    {
+      "id": "kiwi-ears-orchestra-lite",
+      "name": "Kiwi Ears Orchestra Lite",
+      "brand": "Kiwi Ears",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/kiwi-ears-orchestra-lite.json"
+    },
+    {
+      "id": "meze-rai-penta",
+      "name": "Meze Rai Penta",
+      "brand": "Meze",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/meze-rai-penta.json"
+    },
+    {
+      "id": "moondrop-aria",
+      "name": "Moondrop Aria",
+      "brand": "Moondrop",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-aria.json"
+    },
+    {
+      "id": "moondrop-aria-snow-edition",
+      "name": "Moondrop Aria Snow Edition",
+      "brand": "Moondrop",
+      "source": "Super Review",
+      "rig": "IEC 60318-4 (711 coupler)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-aria-snow-edition.json"
+    },
+    {
+      "id": "moondrop-blessing-2",
+      "name": "Moondrop Blessing 2",
+      "brand": "Moondrop",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-blessing-2.json"
+    },
+    {
+      "id": "moondrop-blessing-3",
+      "name": "Moondrop Blessing 3",
+      "brand": "Moondrop",
+      "source": "Super Review",
+      "rig": "IEC 60318-4 (711 coupler)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-blessing-3.json"
+    },
+    {
+      "id": "moondrop-chu",
+      "name": "Moondrop Chu",
+      "brand": "Moondrop",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-chu.json"
+    },
+    {
+      "id": "moondrop-chu-ii",
+      "name": "Moondrop Chu II",
+      "brand": "Moondrop",
+      "source": "Super Review",
+      "rig": "IEC 60318-4 (711 coupler)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-chu-ii.json"
+    },
+    {
+      "id": "moondrop-quarks",
+      "name": "Moondrop Quarks",
+      "brand": "Moondrop",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-quarks.json"
+    },
+    {
+      "id": "moondrop-quarks-dsp",
+      "name": "Moondrop Quarks DSP",
+      "brand": "Moondrop",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-quarks-dsp.json"
+    },
+    {
+      "id": "moondrop-starfield",
+      "name": "Moondrop Starfield",
+      "brand": "Moondrop",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-starfield.json"
+    },
+    {
+      "id": "moondrop-variations",
+      "name": "Moondrop Variations",
+      "brand": "Moondrop",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-variations.json"
+    },
+    {
+      "id": "moondrop-x-crinacle-blessing2-dusk",
+      "name": "Moondrop x Crinacle Blessing2 Dusk",
+      "brand": "Moondrop",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/moondrop-x-crinacle-blessing2-dusk.json"
+    },
+    {
+      "id": "sennheiser-ie-200",
+      "name": "Sennheiser IE 200",
+      "brand": "Sennheiser",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/sennheiser-ie-200.json"
+    },
+    {
+      "id": "sennheiser-ie-600",
+      "name": "Sennheiser IE 600",
+      "brand": "Sennheiser",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/sennheiser-ie-600.json"
+    },
+    {
+      "id": "sennheiser-ie-900",
+      "name": "Sennheiser IE 900",
+      "brand": "Sennheiser",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/sennheiser-ie-900.json"
+    },
+    {
+      "id": "shuoer-s12",
+      "name": "Shuoer S12",
+      "brand": "Shuoer",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/shuoer-s12.json"
+    },
+    {
+      "id": "shuoer-s12-pro",
+      "name": "Shuoer S12 Pro",
+      "brand": "Shuoer",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/shuoer-s12-pro.json"
+    },
+    {
+      "id": "simgot-audio-ew100p",
+      "name": "Simgot Audio EW100P",
+      "brand": "Simgot",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/simgot-audio-ew100p.json"
+    },
+    {
+      "id": "sony-ier-m7",
+      "name": "Sony IER-M7",
+      "brand": "Sony",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/sony-ier-m7.json"
+    },
+    {
+      "id": "sony-ier-m9",
+      "name": "Sony IER-M9",
+      "brand": "Sony",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/sony-ier-m9.json"
+    },
+    {
+      "id": "sony-ier-z1r",
+      "name": "Sony IER-Z1R",
+      "brand": "Sony",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/sony-ier-z1r.json"
+    },
+    {
+      "id": "thieaudio-monarch",
+      "name": "ThieAudio Monarch",
+      "brand": "ThieAudio",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/thieaudio-monarch.json"
+    },
+    {
+      "id": "tin-hifi-p1",
+      "name": "Tin HiFi P1",
+      "brand": "Tin HiFi",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/tin-hifi-p1.json"
+    },
+    {
+      "id": "tin-hifi-t2",
+      "name": "Tin HiFi T2",
+      "brand": "Tin HiFi",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/tin-hifi-t2.json"
+    },
+    {
+      "id": "tin-hifi-t2-plus",
+      "name": "Tin HiFi T2 Plus",
+      "brand": "Tin HiFi",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/tin-hifi-t2-plus.json"
+    },
+    {
+      "id": "tin-hifi-t3",
+      "name": "Tin HiFi T3",
+      "brand": "Tin HiFi",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/tin-hifi-t3.json"
+    },
+    {
+      "id": "truthear-gate",
+      "name": "Truthear Gate",
+      "brand": "Truthear",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/truthear-gate.json"
+    },
+    {
+      "id": "truthear-hexa",
+      "name": "Truthear Hexa",
+      "brand": "Truthear",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/truthear-hexa.json"
+    },
+    {
+      "id": "truthear-nova",
+      "name": "Truthear Nova",
+      "brand": "Truthear",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/truthear-nova.json"
+    },
+    {
+      "id": "truthear-x-crinacle-zero",
+      "name": "Truthear x Crinacle Zero",
+      "brand": "Truthear",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/truthear-x-crinacle-zero.json"
+    },
+    {
+      "id": "truthear-x-crinacle-zero-red",
+      "name": "Truthear x Crinacle Zero RED",
+      "brand": "Truthear",
+      "source": "oratory1990",
+      "rig": "GRAS RA0045 (IEC 60318-4)",
+      "form": "in-ear",
+      "file": "/data/iems/truthear-x-crinacle-zero-red.json"
+    }
+  ],
+  "targets": [
+    {
+      "id": "harman-2019",
+      "name": "Harman Target 2019",
+      "file": "/data/targets/harman-2019.json"
+    }
+  ]
+}
