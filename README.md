@@ -7,11 +7,11 @@ from `/public/data/*.json`.
 ## Stack
 
 - Vite + React 19 + TypeScript + react-router
-- i18n via react-i18next (pt-BR · en-US)
+- i18n via react-i18next (pt-BR and en-US)
 - Tailwind CSS v4 + shadcn/ui
 - Recharts for log-scale frequency-response plots
 - Catppuccin-inspired theme system (Mocha, Kanagawa Wave, Latte),
-  Space Grotesk + Source Code Pro
+- Space Grotesk + Source Code Pro
 
 ## Run
 
@@ -47,10 +47,10 @@ public/data/
 
 ## Pages
 
-- `/` - compare IEMs against a target, 1 kHz normalization, shareable URL
-- `/library` - searchable brand-grouped catalog
-- `/iem/:id` - single IEM vs Harman target, deviation stat
-- `/about` - data provenance and credits
+- `/`: compare IEMs against a target, 1 kHz normalization, shareable URL
+- `/library`: searchable brand-grouped catalog
+- `/iem/:id`: single IEM vs Harman target, deviation stat
+- `/about`: data provenance and credits
 
 ## Credits
 

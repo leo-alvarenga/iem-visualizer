@@ -4,7 +4,7 @@ import type { FrData } from "@/types";
 
 type Meta = { id: string; file: string };
 
-// Effect re-fires whenever the `metas` array identity changes; memoize it.
+// Effect re-fires whenever the `metas` array identity changes; memoize it
 export function useCurves(metas: Meta[]) {
   const [curves, setCurves] = useState<Map<string, FrData>>(new Map());
 
@@ -17,8 +17,7 @@ export function useCurves(metas: Meta[]) {
           if (!cancelled) setCurves((prev) => new Map(prev).set(m.id, data));
         })
         .catch(() => {
-          // Missing curves stay absent from the map; callers treat them as
-          // "not loaded" rather than fatal errors.
+          // Missing curves stay absent from the map
         });
     }
 

@@ -30,9 +30,10 @@ export function useFullscreen(ref: RefObject<HTMLElement | null>) {
   const toggle = useCallback(() => {
     if (document.fullscreenElement) {
       exit();
-    } else {
-      enter();
+      return;
     }
+
+    enter();
   }, [enter, exit]);
 
   return { isFullscreen, enter, exit, toggle };

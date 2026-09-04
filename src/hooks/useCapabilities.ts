@@ -8,6 +8,7 @@ export function useCapabilities() {
 
   useEffect(() => {
     let cancelled = false;
+
     fetchCapabilities()
       .then((c) => {
         if (!cancelled) setCaps(c);
@@ -15,6 +16,7 @@ export function useCapabilities() {
       .catch((e) => {
         if (!cancelled) setError(String(e));
       });
+
     return () => {
       cancelled = true;
     };
