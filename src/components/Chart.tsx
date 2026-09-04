@@ -20,7 +20,7 @@ import {
   YAxis,
   type TooltipPayloadEntry,
 } from "recharts";
-import type { Ref } from "react";
+import { useState, type Ref } from "react";
 
 export interface SeriesMeta {
   key: string;
@@ -116,6 +116,8 @@ export function Chart({
   highlightRegions,
 }: ChartProps) {
   const { t } = useTranslation();
+  const [active, setActive] = useState<string | null>(null);
+
   if (series.length === 0) {
     return (
       <div className="flex h-full items-center justify-center text-sm text-(--color-muted)">
@@ -169,18 +171,30 @@ export function Chart({
         <Tooltip
           filterNull={false}
           formatter={tooltipFormatter(data, series)}
-          labelStyle={{ color: "var(--color-muted)", marginBottom: 4 }}
+          labelStyle={{
+            color: "var(--color-muted)",
+            marginBottom: 4,
+            fontSize: 14,
+          }}
           cursor={{ stroke: "var(--color-muted)", strokeDasharray: "3 3" }}
           labelFormatter={(label) => {
             const f = Number(label);
             const range = getRangeFromValue(f);
 
-            return `${formatFreq(f)} Hz${range ? ` - ${t(`ranges.${range.id}`)}` : ""}`;
+            return (
+              <span className="inline-flex gap-1 items-center pb-1 w-full border-b border-b-(--series-target)">
+                <span className="text-(--color-accent) font-bold">{`${formatFreq(f)}Hz`}</span>
+
+                {range && (
+                  <span className="text-(--color-muted) italic">{` - ${t(`ranges.${range.id}`)}`}</span>
+                )}
+              </span>
+            );
           }}
           contentStyle={{
             fontSize: 12,
             borderRadius: 0,
-            border: "1px solid var(--color-rule)",
+            border: "1px solid var(--series-target)",
             backgroundColor: "var(--color-paper-2)",
           }}
         />
@@ -191,8 +205,6 @@ export function Chart({
           const isHighlighted =
             highlightRegions === r.category || highlightRegions === r.id;
 
-          if (!isHighlighted) return null;
-
           const color = IEM_COLORS[FREQ_RANGES.indexOf(r) % IEM_COLORS.length];
 
           return (
@@ -202,32 +214,42 @@ export function Chart({
               x2={r.x2}
               fill={color}
               stroke={color}
-              fillOpacity={0.2}
-              strokeOpacity={0.5}
+              fillOpacity={isHighlighted ? 0.2 : 0.05}
+              strokeOpacity={isHighlighted ? 0.5 : 0.2}
               className="animated-overlay"
-              label={{
-                position: "insideTop",
-                fill: "var(--color-muted)",
-                value: t(`ranges.${r.id}`),
-              }}
+              label={
+                isHighlighted
+                  ? {
+                      position: "insideTop",
+                      fill: "var(--color-muted)",
+                      value: t(`ranges.${r.id}`),
+                    }
+                  : undefined
+              }
             />
           );
         })}
 
         {series.map((s) => (
           <Line
-            key={s.key}
             dot={false}
+            key={s.key}
             connectNulls
             name={s.label}
-            type="monotone"
+            type="natural"
             dataKey={s.key}
-            strokeWidth={2}
+            strokeWidth={3}
             stroke={s.color}
+            cursor="pointer"
+            activeDot={false}
             animationBegin={300}
             animationDuration={1000}
             animationEasing="ease-in-out"
-            strokeDasharray={s.dashed ? "6 4" : undefined}
+            onMouseLeave={() => setActive(null)}
+            onMouseEnter={() => setActive(s.key)}
+            strokeDasharray={s.dashed ? "12 8" : undefined}
+            strokeOpacity={!active || active === s.key ? 1 : 0.5}
+            onClick={() => setActive((curr) => (curr === s.key ? null : s.key))}
           />
         ))}
       </LineChart>

@@ -23,13 +23,12 @@ const resources = {
       compare: {
         title: "Compare",
         subtitle:
-          "Visualize IEMs frequency responses against a reference target; Normalized at {{hz}} Hz by default",
+          "Visualize IEMs frequency responses against a reference target",
         iemsLabel: "IEMs",
         targetLabel: "Target curve",
         regionLabel: "Highlight region",
         zoomInRegionLabel: "Zoom in Highlight region",
         regionPlaceholder: "None",
-        normalize: "Normalize at {{hz}} Hz",
         yNormalized: "Amplitude (dB, normalized)",
         yRaw: "Amplitude (dB)",
       },
@@ -110,13 +109,12 @@ const resources = {
       compare: {
         title: "Comparar",
         subtitle:
-          "Visualize respostas de frequência de fones intra-auriculares contra uma curva de referência; Normalizas em {{hz}} Hz por padrão",
+          "Visualize respostas de frequência de fones intra-auriculares contra uma curva de referência",
         iemsLabel: "IEMs",
         targetLabel: "Curva alvo",
         regionLabel: "Destacar região",
         zoomInRegionLabel: "Zoom na região de destaque",
         regionPlaceholder: "Nenhuma",
-        normalize: "Normalizar em {{hz}} Hz",
         yNormalized: "Amplitude (dB, normalizada)",
         yRaw: "Amplitude (dB)",
       },
@@ -148,7 +146,7 @@ const resources = {
       },
       ranges: {
         "sub-bass": "Sub-graves",
-        "mid-bass": "Médio-graves",
+        "mid-bass": "Graves médios",
         "lower-mid": "Médios inferiores",
         "upper-mid": "Médios superiores (sensação de claridade)",
         presence: "Presença",

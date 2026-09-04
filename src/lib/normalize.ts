@@ -23,7 +23,7 @@ export function normalizeCurve(
       closest = i;
     }
 
-    return target?.raw[closest][1] ?? 0;
+    return target?.raw?.[closest]?.[1] ?? 0;
   };
 
   const x = data.raw.map((p) => p[0]);

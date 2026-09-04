@@ -2,6 +2,7 @@ import { useMemo, useState, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+
 import { Chart, type ChartRow, type SeriesMeta } from "@/components/Chart";
 import { PageState } from "@/components/PageState";
 import { Switch } from "@/components/ui/switch";
@@ -47,18 +48,19 @@ export function IemDetailPage() {
       const m = { key: "iem", label: iem.name, color: IEM_COLORS[0] };
 
       series.push(m);
-      raw.push({ meta: m, points: normalizeCurve(d, normalize, td) });
+      raw.push({ meta: m, points: normalizeCurve(d, td) });
     }
 
     if (target && td) {
       const m = {
         key: "target",
+        dashed: true,
         label: target.name,
         color: TARGET_COLOR,
       };
 
       series.push(m);
-      raw.push({ meta: m, points: normalizeCurve(td, normalize, td) });
+      raw.push({ meta: m, points: normalizeCurve(td) });
     }
 
     const deviation = d && td ? meanAbsDeviation(d, td) : null;

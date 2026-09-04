@@ -23,6 +23,7 @@ import { Maximize, Minimize } from "lucide-react";
 function readIds(param: string | null, fallback: string[]): string[] {
   if (param === null) return fallback;
   const ids = param.split(",").filter(Boolean);
+
   return ids.length ? ids : fallback;
 }
 
@@ -138,18 +139,20 @@ export function ComparePage() {
 
   return (
     <div
-      className="reveal flex flex-1 flex-col gap-6"
       style={{ "--i": 0 } as CSSProperties}
+      className="reveal flex flex-1 flex-col gap-6"
     >
       <header className="flex flex-col gap-3">
         <span className="font-code text-sm tracking-[0.2em] text-(--color-accent)">
           ~/compare
         </span>
+
         <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
           {t("compare.title")}
         </h1>
+
         <p className="max-w-xl text-sm text-(--color-muted)">
-          {t("compare.subtitle", { hz: NORMALIZE_HZ })}
+          {t("compare.subtitle")}
         </p>
       </header>
 
