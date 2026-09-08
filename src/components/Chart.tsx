@@ -88,7 +88,7 @@ function getTooltipValue(
   name?: NameType,
   item?: TooltipPayloadEntry,
 ): [number | null, number | null] {
-  if (isValid(value)) return [Number(value), item.payload?.f];
+  if (isValid(value)) return [Number(value), item?.payload?.f ?? null];
 
   try {
     if (!item || !name) throw new Error("Invalid data");
@@ -160,9 +160,10 @@ function tooltipFormatter(
     const deviation = targetValue ? actualValue - targetValue : null;
     const isDeviationNegative = deviation && deviation < 0;
 
-    const percent = targetValue
-      ? Math.round((deviation / targetValue) * 100)
-      : null;
+    const percent =
+      targetValue && deviation
+        ? Math.round((deviation / targetValue) * 100)
+        : null;
 
     const icon = isTargetSeries ? <Target size={12} /> : undefined;
 
@@ -170,12 +171,12 @@ function tooltipFormatter(
       <>
         <span
           className="text-xs inline-flex gap-1 items-center"
-          style={{ color: item.stroke }}
+          style={{ color: item?.stroke }}
         >
           {icon || (
             <span
               className="w-3 h-3 rounded-full block border-3"
-              style={{ borderColor: item.stroke }}
+              style={{ borderColor: item?.stroke }}
             />
           )}
 
@@ -191,7 +192,7 @@ function tooltipFormatter(
             <span>{`${actualValue.toFixed(2)}dB`}</span>
 
             <span className="opacity-80 italic">
-              {f !== item.payload?.f && ` (at ${f}Hz)`}
+              {f !== item?.payload?.f && ` (at ${f}Hz)`}
             </span>
           </span>
 
@@ -278,7 +279,12 @@ export function Chart({
 
         <Tooltip
           filterNull={false}
-          formatter={tooltipFormatter(data, series, targetName, active)}
+          formatter={tooltipFormatter(
+            data,
+            series,
+            targetName,
+            active ?? undefined,
+          )}
           cursor={{ stroke: "var(--color-muted)", strokeDasharray: "3 3" }}
           labelStyle={{
             color: "var(--color-muted)",
