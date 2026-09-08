@@ -121,7 +121,7 @@ export function IemDetailPage() {
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col gap-4 lg:flex-row">
-        <main className="flex min-h-105 min-w-0 flex-1 flex-col border border-(--color-rule) bg-(--color-paper-3)">
+        <main className="flex min-h-105 min-w-0 flex-1 flex-col border border-(--color-rule) bg-(--color-paper-3) overflow-hidden">
           <div className="flex items-center gap-2 border-b border-(--color-rule) px-4 py-2 font-code text-xs text-(--color-muted)">
             <span className="text-(--color-accent)">$</span>
             <span>graph</span>
