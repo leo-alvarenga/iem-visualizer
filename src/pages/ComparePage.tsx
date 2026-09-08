@@ -47,6 +47,11 @@ export function ComparePage() {
     [searchParams, caps],
   );
 
+  const targetName = useMemo(
+    () => caps?.targets.find((t) => t.id === targetId)?.name ?? "",
+    [targetId, caps],
+  );
+
   const highlightRegion = searchParams.get("region") ?? "none";
 
   const updateParams = (
@@ -250,6 +255,7 @@ export function ComparePage() {
             <Chart
               data={data}
               series={series}
+              targetName={targetName}
               zoomInHighlight={zoomIn}
               yTitle={t("compare.yRaw")}
               highlightRegions={highlightRegion}

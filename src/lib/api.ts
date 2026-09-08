@@ -1,6 +1,6 @@
 import type { Capabilities, FrData } from "../types";
 
-// Module-level curve cache survives component remounts.
+// Module-level curve cache survives component remounts
 const curveCache = new Map<string, FrData>();
 
 async function fetchJson<T>(url: string): Promise<T> {

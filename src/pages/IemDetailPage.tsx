@@ -1,14 +1,12 @@
-import { useMemo, useState, type CSSProperties } from "react";
+import { useMemo, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 
 import { Chart, type ChartRow, type SeriesMeta } from "@/components/Chart";
 import { PageState } from "@/components/PageState";
-import { Switch } from "@/components/ui/switch";
 import { useCapabilities } from "@/hooks/useCapabilities";
 import { useCurves } from "@/hooks/useCurves";
-import { NORMALIZE_HZ } from "@/lib/constants";
 import { meanAbsDeviation } from "@/lib/catalog";
 import { mergeSeries, normalizeCurve } from "@/lib/normalize";
 import { IEM_COLORS, TARGET_COLOR } from "@/lib/palette";
@@ -17,31 +15,31 @@ export function IemDetailPage() {
   const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { caps, error } = useCapabilities();
-  const [normalize, setNormalize] = useState(true);
 
   const iem = caps?.iems.find((i) => i.id === id);
+  const target = caps?.targets[0];
 
   const metas = useMemo(() => {
     if (!caps || !iem) return [];
-    const target = caps.targets[0];
+
     return target ? [iem, target] : [iem];
-  }, [caps, iem]);
+  }, [caps, iem, target]);
 
   const { curves, pending } = useCurves(metas);
 
   const { series, data, deviation } = useMemo(() => {
-    if (!iem)
+    if (!iem) {
       return {
         series: [] as SeriesMeta[],
         data: [] as ChartRow[],
         deviation: null,
       };
+    }
 
     const raw: { meta: SeriesMeta; points: [number, number][] }[] = [];
     const series: SeriesMeta[] = [];
 
     const d = curves.get(iem.id);
-    const target = caps?.targets[0];
     const td = target ? curves.get(target.id) : undefined;
 
     if (d) {
@@ -63,10 +61,10 @@ export function IemDetailPage() {
       raw.push({ meta: m, points: normalizeCurve(td) });
     }
 
-    const deviation = d && td ? meanAbsDeviation(d, td) : null;
+    const deviation = d && td ? meanAbsDeviation(raw[0].points, td) : null;
 
     return { series, data: mergeSeries(raw), deviation };
-  }, [caps, curves, iem, normalize]);
+  }, [caps, curves, iem, target]);
 
   if (!caps) {
     return (
@@ -123,7 +121,7 @@ export function IemDetailPage() {
       </div>
 
       <div className="flex min-h-0 flex-1 flex-col gap-4 lg:flex-row">
-        <main className="flex min-h-[420px] min-w-0 flex-1 flex-col border border-(--color-rule) bg-(--color-paper-3)">
+        <main className="flex min-h-105 min-w-0 flex-1 flex-col border border-(--color-rule) bg-(--color-paper-3)">
           <div className="flex items-center gap-2 border-b border-(--color-rule) px-4 py-2 font-code text-xs text-(--color-muted)">
             <span className="text-(--color-accent)">$</span>
             <span>graph</span>
@@ -141,7 +139,8 @@ export function IemDetailPage() {
             <Chart
               data={data}
               series={series}
-              yTitle={normalize ? t("compare.yNormalized") : t("compare.yRaw")}
+              targetName={target?.name}
+              yTitle={t("compare.yRaw")}
             />
           </div>
         </main>
@@ -161,15 +160,11 @@ export function IemDetailPage() {
             <p className="font-code text-3xl tabular text-(--color-ink)">
               {deviation !== null ? `${deviation.toFixed(2)} dB` : "-"}
             </p>
+
             <p className="text-xs text-(--color-muted)">
               {t("detail.deviationDesc")}
             </p>
           </div>
-
-          <label className="surface flex items-center justify-between gap-3 p-4 text-sm">
-            {t("compare.normalize", { hz: NORMALIZE_HZ })}
-            <Switch checked={normalize} onCheckedChange={setNormalize} />
-          </label>
         </aside>
       </div>
     </div>

@@ -1,14 +1,5 @@
 import { useTranslation } from "react-i18next";
 import {
-  DBS_TICKS,
-  FREQ_MAX,
-  FREQ_MIN,
-  FREQ_RANGES,
-  FREQ_TICKS,
-} from "@/lib/constants";
-import { IEM_COLORS } from "@/lib/palette";
-import type { NamedRange, RangeCategory } from "@/types";
-import {
   CartesianGrid,
   Legend,
   Line,
@@ -18,10 +9,24 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  type TooltipPayload,
   type TooltipPayloadEntry,
+  type XAxisProps,
+  type YAxisProps,
 } from "recharts";
 import { useState, type Ref } from "react";
 import type { NameType } from "recharts/types/component/DefaultTooltipContent";
+
+import {
+  DBS_TICKS,
+  FREQ_MAX,
+  FREQ_MIN,
+  FREQ_RANGES,
+  FREQ_TICKS,
+} from "@/lib/constants";
+import { IEM_COLORS } from "@/lib/palette";
+import type { NamedRange, RangeCategory } from "@/types";
+import { ArrowBigLeft, Target } from "lucide-react";
 
 export interface SeriesMeta {
   key: string;
@@ -36,6 +41,7 @@ export type ChartRow = { f: number } & Record<string, number>;
 interface ChartProps {
   yTitle: string;
   data: ChartRow[];
+  targetName?: string;
   series: SeriesMeta[];
   ref?: Ref<HTMLDivElement>;
   zoomInHighlight?: boolean;
@@ -73,47 +79,131 @@ function getRangeFromValue(value: number): NamedRange | undefined {
   return FREQ_RANGES.find((range) => value >= range.x1 && value <= range.x2);
 }
 
-function tooltipFormatter(data: ChartRow[], series: SeriesMeta[]) {
-  const isValid = (value: unknown) => !isNaN(Number(value));
+const isValid = (value: unknown) => !isNaN(Number(value));
 
-  return (value: unknown, name?: NameType, item?: TooltipPayloadEntry) => {
-    if (isValid(value)) return `${Number(value ?? 0).toFixed(2)} dB`;
+function getTooltipValue(
+  data: ChartRow[],
+  series: SeriesMeta[],
+  value: unknown,
+  name?: NameType,
+  item?: TooltipPayloadEntry,
+): [number | null, number | null] {
+  if (isValid(value)) return [Number(value), item.payload?.f];
 
-    try {
-      if (!item || !name) throw new Error("Invalid data");
+  try {
+    if (!item || !name) throw new Error("Invalid data");
 
-      const f: number | null = item.payload?.f ?? null;
-      const key = series.find((s) => s.label === name)?.key;
-      const dataIndex = data.findIndex((d) => d.f === f);
+    const f: number | null = item.payload?.f ?? null;
+    const key = series.find((s) => s.label === name)?.key;
+    const dataIndex = data.findIndex((d) => d.f === f);
 
-      if (!key || typeof dataIndex !== "number") {
-        throw new Error("Invalid data");
-      }
-
-      let i = dataIndex;
-      let j = dataIndex + 1;
-      let val: number | null = null;
-
-      while (i >= 0 && j < data.length) {
-        val = data[i]?.[key] ?? data[j]?.[key];
-
-        if (isValid(val)) {
-          const finalIndex = val === data[i]?.[key] ? i : j;
-          return `${val.toFixed(2)} dB (@ ${formatFreq(data[finalIndex]?.f ?? 0)} Hz)`;
-        }
-
-        i--;
-        j++;
-      }
-    } catch (e) {
-      console.log(e);
-      return "N/A";
+    if (!key || typeof dataIndex !== "number") {
+      throw new Error("Invalid data");
     }
 
-    return "N/A";
-  };
+    let i = dataIndex;
+    let j = dataIndex + 1;
+    let val: number | null = null;
+
+    while (i >= 0 && j < data.length) {
+      val = data[i]?.[key] ?? data[j]?.[key];
+
+      if (isValid(val)) {
+        const finalIndex = val === data[i]?.[key] ? i : j;
+
+        return [val, data[finalIndex]?.f];
+      }
+
+      i--;
+      j++;
+    }
+  } catch {
+    //
+  }
+
+  return [null, null];
 }
 
+function tooltipFormatter(
+  data: ChartRow[],
+  series: SeriesMeta[],
+  targetName?: string,
+  activeSeries?: string,
+) {
+  return (
+    value: unknown,
+    name?: NameType,
+    item?: TooltipPayloadEntry,
+    _?: unknown,
+    payload?: TooltipPayload,
+  ) => {
+    const [actualValue, f] = getTooltipValue(data, series, value, name, item);
+    if (!actualValue) return "N/A";
+
+    const originalTargetValue = targetName
+      ? Number(payload?.find((p) => p.name === targetName)?.value)
+      : undefined;
+
+    const [targetValue] = getTooltipValue(
+      data,
+      series,
+      originalTargetValue,
+      targetName,
+      item,
+    );
+
+    const isTargetSeries = targetName === name;
+
+    const key = series.find((s) => s.label === name)?.key;
+    const isActiveSeries = activeSeries === key;
+
+    const deviation = targetValue ? actualValue - targetValue : null;
+    const isDeviationNegative = deviation && deviation < 0;
+
+    const percent = targetValue
+      ? Math.round((deviation / targetValue) * 100)
+      : null;
+
+    const icon = isTargetSeries ? <Target size={12} /> : undefined;
+
+    return [
+      <>
+        <span
+          className="text-xs inline-flex gap-1 items-center"
+          style={{ color: item.stroke }}
+        >
+          {icon || (
+            <span
+              className="w-3 h-3 rounded-full block border-3"
+              style={{ borderColor: item.stroke }}
+            />
+          )}
+
+          <span className={isActiveSeries ? "underline font-bold" : ""}>
+            {name}
+          </span>
+
+          {isActiveSeries && <ArrowBigLeft size={16} />}
+        </span>
+
+        <span className="flex flex-col gap-1 mb-2 pl-2 text-xs text-(--color-muted)">
+          <span className="inline-flex items-center gap-1">
+            <span>{`${actualValue.toFixed(2)}dB`}</span>
+
+            <span className="opacity-80 italic">
+              {f !== item.payload?.f && ` (at ${f}Hz)`}
+            </span>
+          </span>
+
+          {name !== targetName && deviation && percent && (
+            <span>{`${isDeviationNegative ? "" : "+"}${deviation?.toFixed(2) ?? 0}dB`}</span>
+          )}
+        </span>
+      </>,
+      null,
+    ];
+  };
+}
 const tickStyle = { fontSize: 11 };
 
 export function Chart({
@@ -121,11 +211,50 @@ export function Chart({
   data,
   series,
   yTitle,
+  targetName,
   zoomInHighlight,
   highlightRegions,
 }: ChartProps) {
   const { t } = useTranslation();
   const [active, setActive] = useState<string | null>(null);
+
+  const horizontalAxis: XAxisProps = {
+    axisLine: true,
+    tickLine: true,
+    dataKey: "f",
+    scale: "log",
+    type: "number",
+    tickMargin: 8,
+    tick: tickStyle,
+    allowDataOverflow: true,
+    ticks: FREQ_TICKS,
+    tickFormatter: formatFreq,
+    domain: zoomInHighlight
+      ? (getHighlightRange(highlightRegions) ?? [FREQ_MIN, FREQ_MAX])
+      : [FREQ_MIN, FREQ_MAX],
+    label: {
+      offset: 12,
+      value: yTitle,
+      position: "bottom",
+      style: { fontSize: 12 },
+    },
+  };
+
+  const verticalAxis: YAxisProps = {
+    width: 64,
+    axisLine: true,
+    tickLine: true,
+    tick: tickStyle,
+    ticks: DBS_TICKS,
+    tickFormatter: (v: number) => v.toFixed(0),
+    label: {
+      angle: -90,
+      offset: 12,
+      value: yTitle,
+      position: "insideLeft",
+      style: { fontSize: 12 },
+    },
+  };
 
   if (series.length === 0) {
     return (
@@ -137,55 +266,25 @@ export function Chart({
 
   return (
     <ResponsiveContainer ref={ref} width="100%" height="100%">
-      <LineChart
-        data={data}
-        margin={{ top: 10, right: 20, bottom: 10, left: 0 }}
-      >
-        <CartesianGrid stroke="var(--color-rule)" strokeDasharray="3 3" />
-
-        <XAxis
-          axisLine
-          tickLine
-          dataKey="f"
-          scale="log"
-          type="number"
-          tickMargin={8}
-          tick={tickStyle}
-          allowDataOverflow
-          ticks={FREQ_TICKS}
-          tickFormatter={formatFreq}
-          domain={
-            zoomInHighlight
-              ? (getHighlightRange(highlightRegions) ?? [FREQ_MIN, FREQ_MAX])
-              : [FREQ_MIN, FREQ_MAX]
-          }
+      <LineChart data={data} cursor="crosshair">
+        <CartesianGrid
+          stroke="var(--color-rule)"
+          strokeDasharray="3 3"
+          orientation="vertical"
         />
 
-        <YAxis
-          axisLine
-          tickLine
-          width={64}
-          tick={tickStyle}
-          ticks={DBS_TICKS}
-          tickFormatter={(v: number) => v.toFixed(0)}
-          label={{
-            angle: -90,
-            offset: 12,
-            value: yTitle,
-            position: "insideLeft",
-            style: { fontSize: 12 },
-          }}
-        />
+        <XAxis {...horizontalAxis} />
+        <YAxis {...verticalAxis} />
 
         <Tooltip
           filterNull={false}
-          formatter={tooltipFormatter(data, series)}
+          formatter={tooltipFormatter(data, series, targetName, active)}
+          cursor={{ stroke: "var(--color-muted)", strokeDasharray: "3 3" }}
           labelStyle={{
             color: "var(--color-muted)",
             marginBottom: 4,
             fontSize: 14,
           }}
-          cursor={{ stroke: "var(--color-muted)", strokeDasharray: "3 3" }}
           labelFormatter={(label) => {
             const f = Number(label);
             const range = getRangeFromValue(f);
@@ -208,7 +307,7 @@ export function Chart({
           }}
         />
 
-        <Legend wrapperStyle={{ fontSize: 12 }} />
+        <Legend position="bottom" offset={40} wrapperStyle={{ fontSize: 12 }} />
 
         {FREQ_RANGES.map((r) => {
           const isHighlighted =

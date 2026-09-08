@@ -2,9 +2,17 @@
 <html lang="en" class="theme-catppuccin dark">
   <head>
     <meta charset="UTF-8" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>IEM Graph Visualizer</title>
+
+    <meta og:image="/favicon.svg" />
+    <meta og:title="IEM Graph Visualizer" />
+    <meta og:description="Visualize your IEM curves" />
+
     <script>
       try {
         var t = localStorage.getItem("theme");
@@ -12,8 +20,9 @@
           document.documentElement.classList.remove(
             "theme-catppuccin",
             "theme-kanagawa",
-            "theme-latte"
+            "theme-latte",
           );
+
           document.documentElement.classList.add("theme-" + t);
           document.documentElement.classList.toggle("dark", t !== "latte");
         }

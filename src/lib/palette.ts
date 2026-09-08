@@ -1,4 +1,3 @@
-// Recharts takes literal stroke values; the CSS variables resolve from index.css tokens.
 export const IEM_COLORS = [
   "var(--series-1)",
   "var(--series-2)",
