@@ -25,8 +25,11 @@ export type PhoneEntry = {
   reviewLink?: string;
   reviewScore?: string;
   reviewerName: string;
+  reviewerName: string;
   reviewerUsername: string;
   dataBaseUrl: string;
+  normHz: number;
+  normDb: number;
 };
 
 export type TargetEntry = {

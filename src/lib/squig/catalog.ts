@@ -1,5 +1,20 @@
 import type { SquigSite, PhoneEntry } from "@/types";
-import { SQUIG_ROOT, getBaseUrl, slug } from "./urls";
+import { SQUIG_ROOT, getBaseUrl, getSiteOrigin, slug } from "./urls";
+
+async function fetchSiteConfig(
+  origin: string,
+): Promise<{ normHz: number; normDb: number }> {
+  try {
+    const res = await fetch(`${origin}/config.js`);
+    if (!res.ok) return { normHz: 500, normDb: 60 };
+    const text = await res.text();
+    const hz = parseInt(text.match(/default_norm_hz\s*=\s*(\d+)/)?.[1] ?? "500");
+    const db = parseInt(text.match(/default_norm_db\s*=\s*(\d+)/)?.[1] ?? "60");
+    return { normHz: isNaN(hz) ? 500 : hz, normDb: isNaN(db) ? 60 : db };
+  } catch {
+    return { normHz: 500, normDb: 60 };
+  }
+}
 
 export async function fetchSites(): Promise<SquigSite[]> {
   const res = await fetch(`${SQUIG_ROOT}/squigsites.json?squig`);
@@ -12,7 +27,10 @@ export async function fetchPhoneBook(
   db: { type: string; folder: string },
 ): Promise<PhoneEntry[]> {
   const baseUrl = getBaseUrl(site, db);
-  const res = await fetch(`${baseUrl}phone_book.json`);
+  const [res, normConfig] = await Promise.all([
+    fetch(`${baseUrl}phone_book.json`),
+    fetchSiteConfig(getSiteOrigin(site)),
+  ]);
 
   if (!res.ok) return [];
 
@@ -51,6 +69,8 @@ export async function fetchPhoneBook(
           reviewLink: phone.reviewLink,
           reviewScore: phone.reviewScore,
           reviewerUsername: site.username,
+          normHz: normConfig.normHz,
+          normDb: normConfig.normDb,
           // single-file keeps its old id so existing ?device= URLs don't break
           id: slug(
             files.length === 1
