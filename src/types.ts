@@ -7,34 +7,33 @@ export type NamedRange = {
   category: RangeCategory;
 };
 
-export interface IemMeta {
+export type SquigSite = {
+  username: string;
+  name: string;
+  urlType: "subdomain" | "altDomain";
+  altDomain?: string;
+  dbs: { type: string; folder: string; deltaReady?: string }[];
+};
+
+export type PhoneEntry = {
   id: string;
   name: string;
   brand: string;
-  source: string;
-  rig: string;
-  form: string;
   file: string;
-}
+  price?: string;
+  shopLink?: string;
+  reviewLink?: string;
+  reviewScore?: string;
+  reviewerName: string;
+  reviewerUsername: string;
+  dataBaseUrl: string;
+};
 
-export interface TargetMeta {
+export type TargetEntry = {
   id: string;
   name: string;
   file: string;
-}
-
-export interface Capabilities {
-  iems: IemMeta[];
-  targets: TargetMeta[];
-}
-
-export type FrData = {
-  id: string;
-  name?: string;
-  brand?: string;
-  source?: string;
-  rig?: string;
-  form?: string;
-  file?: string;
-  raw: [number, number][];
+  dataBaseUrl: string;
 };
+
+export type FrPoints = [number, number][];
