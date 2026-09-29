@@ -1,71 +1,40 @@
-import { useEffect, useState } from "react";
+import { useQuery, useQueries } from "@tanstack/react-query";
 
 import { fetchSites, fetchPhoneBook } from "@/lib/squig";
 import { fetchTargets } from "@/lib/catalog";
-import type { PhoneEntry, SquigSite, TargetEntry } from "@/types";
 
 export function useSquigCatalog() {
-  const [loading, setLoading] = useState(true);
+  const sitesQuery = useQuery({
+    queryKey: ["squig-sites"],
+    queryFn: fetchSites,
+    staleTime: 5 * 60_000,
+  });
 
-  const [entries, setEntries] = useState<PhoneEntry[]>([]);
-  const [targets, setTargets] = useState<TargetEntry[]>([]);
+  const phonebookQueries = useQueries({
+    queries: (sitesQuery.data ?? []).flatMap((site) =>
+      site.dbs.map((db) => ({
+        queryKey: ["phonebook", site.username, db.folder],
+        queryFn: () => fetchPhoneBook(site, db),
+        staleTime: 5 * 60_000,
+      })),
+    ),
+  });
 
-  const [error, setError] = useState<string | null>(null);
+  const targetsQuery = useQuery({
+    queryKey: ["squig-targets"],
+    queryFn: fetchTargets,
+    staleTime: 5 * 60_000,
+  });
 
-  useEffect(() => {
-    let cancelled = false;
-
-    async function load() {
-      let sites: SquigSite[];
-      try {
-        sites = await fetchSites();
-      } catch (e) {
-        if (!cancelled) {
-          setError(String(e));
-          setLoading(false);
-        }
-
-        return;
-      }
-
-      const iemSites = sites.flatMap((site) =>
-        site.dbs.map((db) => ({ site, db })),
-      );
-
-      // Stream results as phonebooks resolve (incremental loading)
-      let pending = iemSites.length + 1;
-      const done = () => {
-        pending--;
-
-        if (pending === 0 && !cancelled) setLoading(false);
-      };
-
-      for (const { site, db } of iemSites) {
-        fetchPhoneBook(site, db)
-          .then((e) => {
-            if (!cancelled) setEntries((prev) => [...prev, ...e]);
-          })
-          .catch(done)
-          .finally(done);
-      }
-
-      fetchTargets()
-        .then((t) => {
-          if (!cancelled) setTargets(t);
-        })
-        .catch((e) => {
-          if (!cancelled) setError(String(e));
-          done();
-        })
-        .finally(done);
-    }
-
-    load();
-
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const entries = phonebookQueries.flatMap((q) => q.data ?? []);
+  const targets = targetsQuery.data ?? [];
+  const loading =
+    sitesQuery.isLoading || phonebookQueries.some((q) => q.isLoading);
+  const error = sitesQuery.isError
+    ? String(sitesQuery.error)
+    : targetsQuery.isError
+      ? String(targetsQuery.error)
+      : null;
 
   return { entries, targets, loading, error };
 }

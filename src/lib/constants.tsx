@@ -1,4 +1,17 @@
+import { Scale, SquareChevronLeft, SquareChevronRight } from "lucide-react";
+import type { ReactNode } from "react";
+
 import type { NamedRange } from "@/types";
+import type { CurveResult } from "@/hooks/useSquigCurves";
+
+export const QUERY_TIMEOUT = 8000;
+
+const ICON_SIZE = 14;
+export const ICONS_BY_CHANNEL: Record<CurveResult["channel"], ReactNode> = {
+  AVG: <Scale size={ICON_SIZE} />,
+  L: <SquareChevronLeft size={ICON_SIZE} />,
+  R: <SquareChevronRight size={ICON_SIZE} />,
+};
 
 export const FREQ_MIN = 20;
 export const FREQ_MAX = 20000;

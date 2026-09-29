@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export function useSquigStatus() {
-  const [squigOffline, setSquigOffline] = useState(false);
+  const { isError } = useQuery({
+    queryKey: ["squig-sites"],
+    queryFn: () =>
+      fetch("https://squig.link/squigsites.json?squig").then((r) => {
+        if (!r.ok) throw new Error(r.status.toString());
+        return r.json();
+      }),
+    retry: false,
+  });
 
-  useEffect(() => {
-    fetch("https://squig.link/squigsites.json?squig").catch((e) => {
-      if (e instanceof TypeError) setSquigOffline(true);
-    });
-  }, []);
-
-  return { squigOffline };
+  return { squigOffline: isError };
 }
