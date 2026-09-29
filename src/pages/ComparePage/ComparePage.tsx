@@ -35,7 +35,7 @@ export function ComparePage() {
   const { toggle, isFullscreen } = useFullscreen(chartRef);
 
   const { curve: targetCurve } = useTargetCurve(targetEntry);
-  const { curves, pending } = useSquigCurves(selectedIemEntries);
+  const { curves, pending, errorIds } = useSquigCurves(selectedIemEntries);
 
   const { series, data, deviceOptions } = useCompareChart({
     curves,
@@ -83,6 +83,7 @@ export function ComparePage() {
               onChange={selectIems}
               options={deviceOptions}
               selected={selectedIems}
+              errorIds={errorIds}
               label={t("compare.deviceLabel")}
               className="h-[46vh] lg:h-[72vh]"
               getItem={(id) => deviceOptions.find((dev) => dev.id === id)}
@@ -119,9 +120,9 @@ export function ComparePage() {
               ref={chartRef}
               series={series}
               zoomIn={zoomIn}
-              pending={pending}
               isFullscreen={isFullscreen}
               onToggleFullscreen={toggle}
+              pending={pending || loading}
               targetName={targetEntry?.name}
               highlightRegion={highlightRegion}
             />

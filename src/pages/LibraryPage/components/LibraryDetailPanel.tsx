@@ -11,17 +11,17 @@ import type { PhoneEntry, TargetEntry } from "@/types";
 
 import { DeviceMeta } from "./DeviceMeta";
 import { cn } from "@/lib/utils";
-import { hasError } from "@/lib/squig/measurements";
 
 export type LibraryDetailPanelProps = {
   entry: PhoneEntry;
   targets: TargetEntry[];
+  hasError?: boolean;
   selectedTarget: TargetEntry | null;
   onSelectTarget: (id: string) => void;
 };
 
 export function LibraryDetailPanel(props: LibraryDetailPanelProps) {
-  const { entry, targets, selectedTarget, onSelectTarget } = props;
+  const { entry, targets, selectedTarget, onSelectTarget, hasError } = props;
   const { t } = useTranslation();
 
   return (
@@ -30,7 +30,7 @@ export function LibraryDetailPanel(props: LibraryDetailPanelProps) {
         <span
           className={cn(
             "font-code text-lg font-bold ",
-            hasError(entry.id) ? "text-(--color-ink)" : "text-destructive",
+            hasError ? "text-destructive" : "text-(--color-ink)",
           )}
         >
           {entry.brand} {entry.name}

@@ -1,8 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { MAX_RESULTS, MIN_QUERY, type DeviceOption } from "../hooks";
-import { hasError } from "@/lib/squig/measurements";
-import { cn } from "@/lib/utils";
 
 export type DeviceSelectorResultsProps = {
   total: number;
@@ -10,6 +13,7 @@ export type DeviceSelectorResultsProps = {
   debounced: string;
   selected: string[];
   matches: DeviceOption[];
+  errorIds?: Set<string>;
   onToggle: (id: string) => void;
   getItem: (id: string) => DeviceOption | undefined;
 };
@@ -22,6 +26,7 @@ export function DeviceSelectorResults({
   selected,
   onToggle,
   debounced,
+  errorIds,
 }: DeviceSelectorResultsProps) {
   const { t } = useTranslation();
 
@@ -54,7 +59,28 @@ export function DeviceSelectorResults({
       ) : (
         <>
           {matches.map((opt) => {
-            const error = hasError(opt.id);
+            const error = errorIds?.has(opt.id) ?? false;
+
+            if (error) {
+              return (
+                <Tooltip key={opt.id}>
+                  <TooltipTrigger asChild>
+                    <label className="flex cursor-not-allowed items-center gap-2.5 rounded-md px-2 py-1.5 text-sm opacity-60">
+                      <Checkbox
+                        disabled
+                        checked={selected.includes(opt.id)}
+                      />
+                      <span className="truncate text-destructive">
+                        {opt.name}
+                      </span>
+                    </label>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    Failed to load measurement data
+                  </TooltipContent>
+                </Tooltip>
+              );
+            }
 
             return (
               <label
@@ -62,16 +88,10 @@ export function DeviceSelectorResults({
                 className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground"
               >
                 <Checkbox
-                  disabled={error}
                   checked={selected.includes(opt.id)}
                   onCheckedChange={() => onToggle(opt.id)}
                 />
-
-                <span
-                  className={cn("truncate", error ? "text-destructive" : "")}
-                >
-                  {opt.name}
-                </span>
+                <span className="truncate">{opt.name}</span>
               </label>
             );
           })}

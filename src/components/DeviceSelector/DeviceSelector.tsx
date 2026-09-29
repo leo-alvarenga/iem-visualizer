@@ -13,6 +13,7 @@ interface DeviceSelectorProps {
   selected: string[];
   className?: string;
   options: DeviceOption[];
+  errorIds?: Set<string>;
   onChange: (ids: string[]) => void;
   getItem: DeviceSelectorResultsProps["getItem"];
 }
@@ -24,6 +25,7 @@ export function DeviceSelector({
   selected,
   onChange,
   className,
+  errorIds,
 }: DeviceSelectorProps) {
   const { query, setQuery, debounced, ready, matches, total } = useDeviceSearch(
     { options },
@@ -59,6 +61,7 @@ export function DeviceSelector({
         onToggle={toggle}
         selected={selected}
         debounced={debounced}
+        errorIds={errorIds}
       />
     </div>
   );

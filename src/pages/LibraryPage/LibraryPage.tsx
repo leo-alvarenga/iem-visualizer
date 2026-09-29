@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 import { LibraryDetailPanel, LibrarySearch } from "./components";
 import { useLibraryChart } from "./hooks";
-import { hasError } from "@/lib/squig/measurements";
+import { ICONS_BY_CHANNEL } from "@/lib/constants";
 
 export function LibraryPage() {
   const { t } = useTranslation();
@@ -20,6 +20,7 @@ export function LibraryPage() {
   const {
     data,
     series,
+    errorIds,
     iemResult,
     iemPending,
     selectedEntry,
@@ -57,13 +58,14 @@ export function LibraryPage() {
               {iemResult && (
                 <span
                   className={cn(
-                    "ml-1 rounded border border-(--color-rule) px-1 text-[10px]",
-                    selectedEntry && hasError(selectedEntry?.id)
+                    "ml-1 rounded border border-(--color-rule) inline-flex gap-2 items-center justify-center font-bold bg-accent py-1/2 px-1",
+                    selectedEntry && errorIds.has(selectedEntry.id)
                       ? "text-destructive"
                       : "",
                   )}
                 >
-                  {iemResult.channel}
+                  {`${iemResult.channel} `}
+                  {ICONS_BY_CHANNEL[iemResult.channel]}
                 </span>
               )}
 
@@ -93,6 +95,7 @@ export function LibraryPage() {
             entry={selectedEntry}
             selectedTarget={selectedTarget}
             onSelectTarget={setSelectedTargetId}
+            hasError={errorIds.has(selectedEntry.id)}
           />
         </div>
       )}

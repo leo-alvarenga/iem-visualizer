@@ -31,7 +31,7 @@ export function useLibraryChart(params: UseLibraryChartParams) {
     [targets, selectedTargetId],
   );
 
-  const { curves, pending: iemPending } = useSquigCurves(
+  const { curves, pending: iemPending, errorIds } = useSquigCurves(
     selectedEntry ? [selectedEntry] : [],
   );
 
@@ -76,6 +76,7 @@ export function useLibraryChart(params: UseLibraryChartParams) {
     setSelectedTargetId,
     iemResult,
     iemPending,
+    errorIds,
     series,
     data,
   };
