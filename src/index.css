@@ -168,8 +168,8 @@ body {
 .reveal {
   opacity: 0;
   transform: translateY(8px);
-  animation: reveal var(--dur-long) var(--ease-out) forwards;
   animation-delay: calc(var(--i, 0) * 60ms);
+  animation: reveal var(--dur-long) var(--ease-out) forwards;
 }
 
 @keyframes reveal {

@@ -1,6 +1,7 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { OfflineModal } from "@/components/OfflineModal";
 import { cn } from "@/lib/utils";
 
 const LINKS: { to: string; key: string; end?: boolean }[] = [
@@ -47,6 +48,7 @@ export function AppLayout() {
 
   return (
     <div className="flex min-h-dvh flex-col">
+      <OfflineModal />
       <header className="border-b border-(--color-rule)">
         <nav
           aria-label={t("nav.primary")}
