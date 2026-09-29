@@ -1,0 +1,99 @@
+export const enUS = {
+  common: {
+    loading: "Loading…",
+    loadError: "Failed to load data: {{error}}",
+  },
+  nav: {
+    compare: "Compare",
+    library: "Library",
+    about: "About",
+    primary: "Primary",
+    lang: "Switch language",
+  },
+  footer: {
+    source:
+      "Frequency responses from AutoEq, mirrored from squig.link databases",
+    tagline: "Remember: listen music, not the equipment you're using",
+  },
+  compare: {
+    title: "Compare",
+    subtitle:
+      "Visualize IEMs frequency responses against a reference target",
+    deviceLabel: "Devices",
+    targetLabel: "Target curve",
+    regionLabel: "Highlight region",
+    zoomInRegionLabel: "Zoom in Highlight region",
+    regionPlaceholder: "None",
+    yNormalized: "Amplitude (dB, normalized)",
+    yRaw: "Amplitude (dB)",
+  },
+  chart: {
+    empty: "Select at least one IEM to plot the chart",
+  },
+  deviceSelector: {
+    placeholder: "Search devices (2+ characters)…",
+    minChars: "Type at least {{count}} characters to search",
+    noResults: 'No devices match "{{query}}"',
+    refine: "Showing the first {{shown}} of {{total}} — refine your search",
+    selected: "{{count}} selected",
+  },
+  library: {
+    title: "Library",
+    searchPlaceholder: "Search by name or brand…",
+    measuredBy: "measured by {{reviewer}}",
+    loading: "Loading catalog…",
+    noResults: 'No results for "{{query}}"',
+    reviewLink: "Review",
+    shopLink: "Shop",
+  },
+  detail: {
+    back: "Library",
+    openCompare: "Open in compare",
+    brand: "Brand",
+    source: "Source",
+    rig: "Rig",
+    type: "Type",
+    deviation: "Harman deviation",
+    deviationDesc:
+      "Mean absolute difference from the Harman 2019 target (20 Hz - 10 kHz). Lower is closer to the target",
+    notFound: "That IEM isn't in the library",
+    backToLibrary: "Back to library",
+  },
+  ranges: {
+    "sub-bass": "Sub-bass",
+    "mid-bass": "Mid-bass",
+    "lower-mid": "Lower midrange",
+    "upper-mid": "Upper midrange (clarity feeling)",
+    presence: "Presence",
+    "mid-treble": "Mid-treble (main cause of auditory fatigue)",
+    air: "Upper treble (air)",
+  },
+  about: {
+    title: "About",
+    intro:
+      "A dark workbench for comparing in-ear monitor frequency responses",
+    dataTitle: "Data",
+    dataBody:
+      "Curves come from the <autoEq>AutoEq</autoEq> project, which mirrors frequency response measurements published across the <squig>squig.link</squig> ecosystem. This build ships a curated snapshot of popular IEMs measured by <oratory>oratory1990</oratory> and <superReview>Super Review</superReview>, regenerated with <code>npm run data</code>.",
+    methodTitle: "Method",
+    methodBody1:
+      "All curves are raw on-ear coupler measurements on IEC 60318-4 rigs (GRAS RA0045 or 711-style), plotted on a logarithmic frequency axis from 20 Hz to 20 kHz. Normalization shifts each curve so it reads 0 dB at 1 kHz, which is how squig.link compares relative tonality; absolute SPL is not shown",
+    methodBody2:
+      "The reference line is the Harman 2019 in-ear target. A frequency response is not the whole story: fit, seal, unit variation, and rig differences all move these curves.",
+    creditsTitle: "Credits",
+    credits: {
+      squig: "measurement database + graph tool",
+      autoEq: "open data + EQ tooling (MIT)",
+      oratory: "measurements",
+      superReview: "measurements",
+    },
+  },
+  onboarding: {
+    title: "Welcome to IEM Graph",
+    compare: "Compare FR curves for multiple IEMs side by side",
+    library: "Browse the full squig.link database and view individual measurements",
+    targets: "Overlay target curves (Harman, DF, etc.) to gauge tonality",
+    data: "All data is sourced live from squig.link reviewer measurements",
+    dismiss: "Got it",
+  },
+} as const;
