@@ -1,28 +1,34 @@
-import { useState } from "react";
+import { X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-const STORAGE_KEY = "onboarding_dismissed";
+interface Props {
+  open: boolean;
+  onClose: () => void;
+}
 
-export function OnboardingModal() {
+export function OnboardingModal({ open, onClose }: Props) {
   const { t } = useTranslation();
-  const [open, setOpen] = useState(() => !localStorage.getItem(STORAGE_KEY));
-
-  function dismiss() {
-    localStorage.setItem(STORAGE_KEY, "1");
-    setOpen(false);
-  }
 
   if (!open) return null;
 
   return (
     <div
-      onClick={dismiss}
-      className="fixed w-screen h-screen z-50 left-0 top-0 flex items-center justify-center bg-black/60"
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
     >
       <div
-        className="surface mx-4 max-w-md p-6 shadow-xl"
+        className="relative mx-4 max-w-md w-full rounded-xl border border-(--color-rule) bg-(--color-bg1) p-6 shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute top-4 right-4 cursor-pointer text-(--color-muted) transition-colors hover:text-(--color-ink)"
+        >
+          <X className="w-4 h-4" />
+        </button>
+
         <h2 className="mb-4 font-code text-lg font-bold text-(--color-ink)">
           {t("onboarding.title")}
         </h2>
@@ -36,11 +42,23 @@ export function OnboardingModal() {
 
         <button
           type="button"
-          onClick={dismiss}
-          className="cursor-pointer border border-(--color-accent) px-4 py-2 font-code text-sm text-(--color-accent) transition-colors hover:bg-(--color-accent) hover:text-(--color-bg1)"
+          onClick={onClose}
+          className="w-full cursor-pointer border border-(--color-accent) px-4 py-2 font-code text-sm text-(--color-accent) transition-colors hover:bg-(--color-accent) hover:text-(--color-bg1) mb-4"
         >
           {t("onboarding.dismiss")}
         </button>
+
+        <p className="font-code text-xs text-center text-(--color-muted)">
+          Made by{" "}
+          <a
+            href="https://leoalvarenga.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline transition-colors hover:text-(--color-ink)"
+          >
+            Leo Alvarenga
+          </a>
+        </p>
       </div>
     </div>
   );

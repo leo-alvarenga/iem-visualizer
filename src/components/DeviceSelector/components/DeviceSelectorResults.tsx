@@ -39,6 +39,21 @@ export function DeviceSelectorResults({
           {selected.map((opt) => {
             const item = getItem(opt);
             if (!item) return null;
+            const isError = errorIds?.has(opt) ?? false;
+
+            if (isError) {
+              return (
+                <Tooltip key={opt}>
+                  <TooltipTrigger asChild>
+                    <label className="flex cursor-not-allowed items-center gap-2.5 rounded-md px-2 py-1.5 text-sm opacity-60">
+                      <Checkbox disabled checked />
+                      <span className="truncate text-destructive">{item.name}</span>
+                    </label>
+                  </TooltipTrigger>
+                  <TooltipContent>Failed to load measurement data</TooltipContent>
+                </Tooltip>
+              );
+            }
 
             return (
               <label
@@ -46,7 +61,6 @@ export function DeviceSelectorResults({
                 className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground"
               >
                 <Checkbox checked onCheckedChange={() => onToggle(opt)} />
-
                 <span className="truncate">{item.name}</span>
               </label>
             );
@@ -66,10 +80,7 @@ export function DeviceSelectorResults({
                 <Tooltip key={opt.id}>
                   <TooltipTrigger asChild>
                     <label className="flex cursor-not-allowed items-center gap-2.5 rounded-md px-2 py-1.5 text-sm opacity-60">
-                      <Checkbox
-                        disabled
-                        checked={selected.includes(opt.id)}
-                      />
+                      <Checkbox disabled checked={selected.includes(opt.id)} />
                       <span className="truncate text-destructive">
                         {opt.name}
                       </span>
@@ -89,7 +100,8 @@ export function DeviceSelectorResults({
               >
                 <Checkbox
                   checked={selected.includes(opt.id)}
-                  onCheckedChange={() => onToggle(opt.id)}
+
+                  onClick={() => onToggle(opt.id)}
                 />
                 <span className="truncate">{opt.name}</span>
               </label>

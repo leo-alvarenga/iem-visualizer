@@ -1,8 +1,14 @@
+import { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Info } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { OfflineModal } from "@/components/OfflineModal";
+import { OnboardingModal } from "@/components/OnboardingModal";
+import { Toaster } from "@/components/Toast";
 import { cn } from "@/lib/utils";
+
+const STORAGE_KEY = "onboarding_dismissed";
 
 const LINKS: { to: string; key: string; end?: boolean }[] = [
   { to: "/", key: "nav.compare", end: true },
@@ -36,6 +42,14 @@ function Brand() {
 
 export function AppLayout() {
   const { t, i18n } = useTranslation();
+  const [welcomeOpen, setWelcomeOpen] = useState(
+    () => !localStorage.getItem(STORAGE_KEY),
+  );
+
+  const closeWelcome = () => {
+    localStorage.setItem(STORAGE_KEY, "1");
+    setWelcomeOpen(false);
+  };
 
   const toggleLang = () => {
     const next = i18n.resolvedLanguage === "pt-BR" ? "en-US" : "pt-BR";
@@ -49,6 +63,8 @@ export function AppLayout() {
   return (
     <div className="flex min-h-dvh flex-col">
       <OfflineModal />
+      <OnboardingModal open={welcomeOpen} onClose={closeWelcome} />
+      <Toaster />
       <header className="border-b border-(--color-rule)">
         <nav
           aria-label={t("nav.primary")}
@@ -56,6 +72,17 @@ export function AppLayout() {
         >
           <Brand />
 
+          <span className="hidden items-center gap-1 font-code text-sm italic md:inline-flex">
+            <span className="text-(--color-muted)">by</span>
+            <a
+              href="https://leoalvarenga.dev"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-(--color-muted) underline transition-colors duration-250 hover:text-(--color-accent)"
+            >
+              Leo Alvarenga
+            </a>
+          </span>
           <span className="ml-auto flex items-center gap-3 sm:gap-6">
             {LINKS.map(({ to, key, end }) => (
               <NavLink
@@ -77,6 +104,14 @@ export function AppLayout() {
           </span>
 
           <span className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setWelcomeOpen(true)}
+              aria-label="About"
+              className="cursor-pointer p-1.5 text-(--color-muted) transition-colors duration-250 hover:text-(--color-accent)"
+            >
+              <Info className="w-4 h-4" />
+            </button>
             <ThemeToggle />
             <button
               type="button"
