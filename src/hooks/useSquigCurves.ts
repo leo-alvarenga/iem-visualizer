@@ -42,13 +42,10 @@ export function useTargetCurve(target: TargetEntry | null) {
   });
 
   useEffect(() => {
-    if (isError && target) {
+    if (isError && target && !hasWarned.current.has(target.id)) {
+      hasWarned.current.add(target.id);
       toast(`Couldn't load target curve "${target.name}"`);
-
-      if (!hasWarned.current.has(target.id)) {
-        hasWarned.current.add(target.id);
-        console.warn(`Couldn't load target curve "${target.name}"`);
-      }
+      console.warn(`Couldn't load target curve "${target.name}"`);
     }
   }, [isError, target]);
 
