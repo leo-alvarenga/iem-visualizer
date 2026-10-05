@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useQuery, useQueries } from "@tanstack/react-query";
+import { toast } from "@/components/Toast";
 import { fetchMeasurementCoalesced, fetchTargetPoints } from "@/lib/squig";
 import type { PhoneEntry, TargetEntry, FrPoints } from "@/types";
 
@@ -29,13 +31,17 @@ export function useSquigCurves(entries: PhoneEntry[]) {
 }
 
 export function useTargetCurve(target: TargetEntry | null) {
-  const { data: curve = null } = useQuery({
+  const { data: curve = null, isError } = useQuery({
     retry: 1,
     enabled: !!target,
     staleTime: Infinity,
     queryKey: ["target-curve", target?.id],
     queryFn: ({ signal }) => fetchTargetPoints(target!, signal),
   });
+
+  useEffect(() => {
+    if (isError && target) toast(`Couldn't load target curve "${target.name}"`);
+  }, [isError, target]);
 
   return { curve };
 }
