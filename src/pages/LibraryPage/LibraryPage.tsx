@@ -12,7 +12,7 @@ import { ICONS_BY_CHANNEL } from "@/lib/constants";
 
 export function LibraryPage() {
   const { t } = useTranslation();
-  const { entries, targets, loading } = useSquigCatalog();
+  const { entries, targets: allTargets, loading } = useSquigCatalog();
   const [searchParams] = useSearchParams();
 
   const deviceId = searchParams.get("device");
@@ -20,6 +20,7 @@ export function LibraryPage() {
   const {
     data,
     series,
+    targets,
     errorIds,
     iemResult,
     iemPending,
@@ -28,7 +29,7 @@ export function LibraryPage() {
     setSelectedTargetId,
     showTarget,
     setShowTarget,
-  } = useLibraryChart({ entries, targets, deviceId });
+  } = useLibraryChart({ entries, targets: allTargets, deviceId });
 
   return (
     <div

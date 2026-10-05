@@ -43,5 +43,5 @@ export function useTargetCurve(target: TargetEntry | null) {
     if (isError && target) toast(`Couldn't load target curve "${target.name}"`);
   }, [isError, target]);
 
-  return { curve };
+  return { curve, failedId: isError && target ? target.id : null };
 }

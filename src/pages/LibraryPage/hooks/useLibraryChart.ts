@@ -38,7 +38,19 @@ export function useLibraryChart(params: UseLibraryChartParams) {
 
   const iemResult = selectedEntry ? curves.get(selectedEntry.id) : undefined;
 
-  const { curve: targetCurve } = useTargetCurve(selectedTarget);
+  const { curve: targetCurve, failedId } = useTargetCurve(selectedTarget);
+
+  const visibleTargets = useMemo(
+    () => (failedId ? targets.filter((t) => t.id !== failedId) : targets),
+    [targets, failedId],
+  );
+
+  useEffect(() => {
+    if (failedId && failedId === selectedTargetId) {
+      const next = visibleTargets[0];
+      setSelectedTargetId(next?.id ?? "");
+    }
+  }, [failedId, selectedTargetId, visibleTargets]);
 
   const { series, data } = useMemo(() => {
     if (!selectedEntry) {
@@ -82,5 +94,6 @@ export function useLibraryChart(params: UseLibraryChartParams) {
     errorIds,
     series,
     data,
+    targets: visibleTargets,
   };
 }

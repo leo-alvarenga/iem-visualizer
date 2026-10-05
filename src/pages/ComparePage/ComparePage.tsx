@@ -1,4 +1,4 @@
-import { useRef, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 
 import { DeviceSelector } from "@/components/DeviceSelector";
@@ -35,7 +35,16 @@ export function ComparePage() {
   const chartRef = useRef<HTMLDivElement>(null);
   const { toggle, isFullscreen } = useFullscreen(chartRef);
 
-  const { curve: targetCurve } = useTargetCurve(targetEntry);
+  const { curve: targetCurve, failedId } = useTargetCurve(targetEntry);
+
+  const visibleTargets = useMemo(
+    () => (failedId ? targets.filter((t) => t.id !== failedId) : targets),
+    [targets, failedId],
+  );
+
+  useEffect(() => {
+    if (failedId && failedId === targetId) selectTarget(visibleTargets[0]?.id ?? "");
+  }, [failedId, targetId, visibleTargets]);
   const { curves, pending, errorIds } = useSquigCurves(selectedIemEntries);
 
   const { series, data, deviceOptions } = useCompareChart({
@@ -101,7 +110,7 @@ export function ComparePage() {
           <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 lg:h-[72vh]">
             <CompareControls
               zoomIn={zoomIn}
-              targets={targets}
+              targets={visibleTargets}
               targetId={targetId}
               showTarget={showTarget}
               onZoomInChange={setZoomIn}
