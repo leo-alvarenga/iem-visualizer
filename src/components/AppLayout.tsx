@@ -65,6 +65,7 @@ export function AppLayout() {
       <OfflineModal />
       <OnboardingModal open={welcomeOpen} onClose={closeWelcome} />
       <Toaster />
+
       <header className="border-b border-(--color-rule)">
         <nav
           aria-label={t("nav.primary")}
@@ -112,7 +113,9 @@ export function AppLayout() {
             >
               <Info className="w-4 h-4" />
             </button>
+
             <ThemeToggle />
+
             <button
               type="button"
               onClick={toggleLang}
@@ -125,7 +128,7 @@ export function AppLayout() {
         </nav>
       </header>
 
-      <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-4 py-6 sm:px-6">
+      <main className="mx-auto flex w-full flex-1 flex-col px-4 py-6 sm:px-6">
         <Outlet />
       </main>
 
