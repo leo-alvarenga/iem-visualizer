@@ -5,7 +5,7 @@ import { Info } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { OfflineModal } from "@/components/OfflineModal";
 import { OnboardingModal } from "@/components/OnboardingModal";
-import { Toaster } from "@/components/Toast";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/utils";
 
 const STORAGE_KEY = "onboarding_dismissed";

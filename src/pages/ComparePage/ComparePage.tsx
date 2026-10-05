@@ -43,8 +43,9 @@ export function ComparePage() {
   );
 
   useEffect(() => {
-    if (failedId && failedId === targetId) selectTarget(visibleTargets[0]?.id ?? "");
+    if (failedId && failedId === targetId) selectTarget(null);
   }, [failedId, targetId, visibleTargets]);
+
   const { curves, pending, errorIds } = useSquigCurves(selectedIemEntries);
 
   const { series, data, deviceOptions } = useCompareChart({

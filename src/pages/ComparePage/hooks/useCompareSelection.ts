@@ -41,7 +41,7 @@ export function useCompareSelection() {
 
   const updateParams = (
     iems: string[],
-    target: string,
+    target: string | null,
     region?: string,
     show?: boolean,
   ) => {
@@ -54,6 +54,8 @@ export function useCompareSelection() {
     }
 
     if (target) next.set("target", target);
+    else next.delete("target");
+
     if (region) next.set("region", region);
     else next.delete("region");
     if (show === false) next.set("showTarget", "0");
@@ -64,8 +66,10 @@ export function useCompareSelection() {
 
   const selectIems = (ids: string[]) =>
     updateParams(ids, targetId, undefined, showTarget || undefined);
-  const selectTarget = (id: string) =>
+
+  const selectTarget = (id: string | null) =>
     updateParams(selectedIems, id, undefined, showTarget || undefined);
+
   const toggleTarget = (v: boolean) =>
     updateParams(
       selectedIems,

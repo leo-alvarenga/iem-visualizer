@@ -1,6 +1,7 @@
-import { useQueries } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 
 import { fetchSites, fetchPhoneBook } from "@/lib/squig";
+import { useMemo } from "react";
 
 export function useSquigCatalog() {
   const sitesQuery = useQuery({
@@ -19,15 +20,24 @@ export function useSquigCatalog() {
     ),
   });
 
+  const entries = useMemo(
+    () => phonebookQueries.flatMap((q) => q.data?.entries ?? []),
+    [phonebookQueries],
+  );
 
-  const entries = phonebookQueries.flatMap((q) => q.data?.entries ?? []);
-  const targets = [
-    ...new Map(
-      phonebookQueries
-        .flatMap((q) => q.data?.targets ?? [])
-        .map((t) => [t.file, t]),
-    ).values(),
-  ];
+  const targets = useMemo(
+    () => [
+      ...new Map(
+        phonebookQueries
+          .flatMap((q) => q.data?.targets ?? [])
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((t) => {
+            return [t.id, { ...t, name: `${t.name} (${t.id})` }];
+          }),
+      ).values(),
+    ],
+    [phonebookQueries],
+  );
 
   const loading =
     sitesQuery.isFetching || phonebookQueries.some((q) => q.isFetching);

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useQuery, useQueries } from "@tanstack/react-query";
-import { toast } from "@/components/Toast";
+import { toast } from "sonner";
 import { fetchMeasurementCoalesced, fetchTargetPoints } from "@/lib/squig";
 import type { PhoneEntry, TargetEntry, FrPoints } from "@/types";
 
@@ -31,6 +31,8 @@ export function useSquigCurves(entries: PhoneEntry[]) {
 }
 
 export function useTargetCurve(target: TargetEntry | null) {
+  const hasWarned = useRef(new Set<string>());
+
   const { data: curve = null, isError } = useQuery({
     retry: 1,
     enabled: !!target,
@@ -40,7 +42,14 @@ export function useTargetCurve(target: TargetEntry | null) {
   });
 
   useEffect(() => {
-    if (isError && target) toast(`Couldn't load target curve "${target.name}"`);
+    if (isError && target) {
+      toast(`Couldn't load target curve "${target.name}"`);
+
+      if (!hasWarned.current.has(target.id)) {
+        hasWarned.current.add(target.id);
+        console.warn(`Couldn't load target curve "${target.name}"`);
+      }
+    }
   }, [isError, target]);
 
   return { curve, failedId: isError && target ? target.id : null };
