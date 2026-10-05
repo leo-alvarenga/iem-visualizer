@@ -1,20 +1,17 @@
-import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   CartesianGrid,
   Legend,
   LineChart,
-  ReferenceDot,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
-  type MouseHandlerDataParam,
 } from "recharts";
 
 import { ChartRangeAreas, ChartSeriesLines } from "./components";
 import type { ChartProps } from "./Chart.types";
-import { formatFreq, getRangeFromValue, interpolateAt } from "./Chart.utils";
+import { formatFreq, getRangeFromValue } from "./Chart.utils";
 import { useActiveSeries, useChartAxes, useChartTooltip } from "./hooks";
 
 export function Chart({
@@ -30,9 +27,6 @@ export function Chart({
   const { t } = useTranslation();
   const { active, enter, leave, toggle } = useActiveSeries();
 
-  const activeIndexTimer = useRef<number | null>(null);
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
   const { horizontalAxis, verticalAxis } = useChartAxes({
     xTitle,
     yTitle,
@@ -47,19 +41,6 @@ export function Chart({
     activeSeries: active ?? undefined,
   });
 
-  const handleMouseMove = (state: MouseHandlerDataParam) => {
-    const index = (state as { activeTooltipIndex?: number }).activeTooltipIndex;
-
-    if (activeIndexTimer.current !== null) {
-      clearTimeout(activeIndexTimer.current);
-    }
-
-    activeIndexTimer.current = setTimeout(
-      () => setActiveIndex(index ?? null),
-      300,
-    );
-  };
-
   if (series.length === 0) {
     return (
       <div className="flex h-full items-center justify-center text-sm text-(--color-muted)">
@@ -70,12 +51,7 @@ export function Chart({
 
   return (
     <ResponsiveContainer ref={ref} width="100%" height="100%">
-      <LineChart
-        data={data}
-        cursor="crosshair"
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseMove}
-      >
+      <LineChart data={data} cursor="crosshair">
         <CartesianGrid
           stroke="var(--color-rule)"
           strokeDasharray="3 3"
@@ -128,35 +104,6 @@ export function Chart({
           onLeave={leave}
           onToggle={toggle}
         />
-
-        {activeIndex !== null &&
-          series.flatMap((s) => {
-            const row = data[activeIndex];
-            if (!row) return [];
-
-            const direct = row[s.key];
-            const hasDirect = direct != null && !isNaN(direct);
-
-            const value = hasDirect
-              ? direct
-              : interpolateAt(data, s.key, activeIndex);
-
-            if (value == null) return [];
-
-            return [
-              <ReferenceDot
-                r={4}
-                x={row.f}
-                y={value}
-                key={s.key}
-                strokeWidth={2}
-                stroke={s.color}
-                fill={hasDirect ? s.color : "none"}
-                strokeDasharray={hasDirect ? undefined : "3 2"}
-                opacity={!active || active === s.key ? 1 : 0.4}
-              />,
-            ];
-          })}
       </LineChart>
     </ResponsiveContainer>
   );
