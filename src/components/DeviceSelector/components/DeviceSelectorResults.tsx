@@ -5,7 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { MAX_RESULTS, MIN_QUERY, type DeviceOption } from "../hooks";
+import { MAX_RESULTS, type DeviceOption } from "../hooks";
 
 export type DeviceSelectorResultsProps = {
   total: number;
@@ -14,6 +14,7 @@ export type DeviceSelectorResultsProps = {
   selected: string[];
   matches: DeviceOption[];
   errorIds?: Set<string>;
+  minQueryLength: number;
   onToggle: (id: string) => void;
   getItem: (id: string) => DeviceOption | undefined;
 };
@@ -23,10 +24,11 @@ export function DeviceSelectorResults({
   total,
   matches,
   getItem,
+  errorIds,
   selected,
   onToggle,
   debounced,
-  errorIds,
+  minQueryLength,
 }: DeviceSelectorResultsProps) {
   const { t } = useTranslation();
 
@@ -34,11 +36,12 @@ export function DeviceSelectorResults({
     <div className="min-h-0 flex-1 overflow-y-auto">
       {!ready ? (
         <p className="px-2 py-1.5 font-code text-xs text-(--color-muted)">
-          {t("deviceSelector.minChars", { count: MIN_QUERY })}
+          {t("deviceSelector.minChars", { count: minQueryLength })}
 
           {selected.map((opt) => {
             const item = getItem(opt);
             if (!item) return null;
+
             const isError = errorIds?.has(opt) ?? false;
 
             if (isError) {
@@ -47,18 +50,23 @@ export function DeviceSelectorResults({
                   <TooltipTrigger asChild>
                     <label className="flex cursor-not-allowed items-center gap-2.5 rounded-md px-2 py-1.5 text-sm opacity-60">
                       <Checkbox disabled checked />
-                      <span className="truncate text-destructive">{item.name}</span>
+                      <span className="truncate text-destructive">
+                        {item.name}
+                      </span>
                     </label>
                   </TooltipTrigger>
-                  <TooltipContent>Failed to load measurement data</TooltipContent>
+
+                  <TooltipContent>
+                    Failed to load measurement data
+                  </TooltipContent>
                 </Tooltip>
               );
             }
-
             return (
               <label
                 key={opt}
                 className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground"
+                onClick={() => onToggle(opt)}
               >
                 <Checkbox checked onCheckedChange={() => onToggle(opt)} />
                 <span className="truncate">{item.name}</span>
@@ -97,11 +105,11 @@ export function DeviceSelectorResults({
               <label
                 key={opt.id}
                 className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground"
+                onClick={() => onToggle(opt.id)}
               >
                 <Checkbox
                   checked={selected.includes(opt.id)}
-
-                  onClick={() => onToggle(opt.id)}
+                  onClick={(e) => e.stopPropagation()}
                 />
                 <span className="truncate">{opt.name}</span>
               </label>

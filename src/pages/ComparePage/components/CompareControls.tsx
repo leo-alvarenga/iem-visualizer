@@ -9,66 +9,26 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { FREQ_RANGES } from "@/lib/constants";
-import type { TargetEntry } from "@/types";
 
 import { CompareField } from "./CompareField";
 
 type CompareControlsProps = {
-  targets: TargetEntry[];
-  targetId: string;
-  showTarget: boolean;
-  onTargetChange: (id: string) => void;
-  onToggleTarget: (v: boolean) => void;
   highlightRegion: string;
-  onRegionChange: (id: string) => void;
   zoomIn: boolean;
+  onRegionChange: (id: string) => void;
   onZoomInChange: (checked: boolean) => void;
 };
 
 export function CompareControls({
-  targets,
-  targetId,
-  showTarget,
   zoomIn,
   onRegionChange,
-  onTargetChange,
-  onToggleTarget,
   onZoomInChange,
   highlightRegion,
 }: CompareControlsProps) {
   const { t } = useTranslation();
-  const hasTargets = targets.length > 1;
 
   return (
     <div className="flex flex-wrap items-end gap-x-4 gap-y-3">
-      {hasTargets && (
-        <div className="min-w-44 flex-1">
-          <CompareField label={t("compare.targetLabel")}>
-            <div className="flex items-center gap-2">
-              <Select
-                value={targetId}
-                onValueChange={onTargetChange}
-                disabled={!showTarget}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder={t("compare.targetLabel")} />
-                </SelectTrigger>
-
-                <SelectContent>
-                  {targets.map((tgt) => (
-                    <SelectItem key={tgt.id} value={tgt.id}>
-                      {tgt.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Switch checked={showTarget} onCheckedChange={onToggleTarget} />
-            </div>
-          </CompareField>
-        </div>
-      )}
-
       <div className="min-w-44 flex-1">
         <CompareField label={t("compare.regionLabel")}>
           <Select value={highlightRegion} onValueChange={onRegionChange}>

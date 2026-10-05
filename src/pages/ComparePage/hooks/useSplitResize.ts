@@ -1,7 +1,11 @@
 import { useRef, useState } from "react";
 
 export function useSplitResize() {
-  const [splitWidth, setSplitWidth] = useState(360);
+  const maxWidth = window.innerWidth * 0.8;
+  const minWidth = window.innerWidth * 0.2;
+
+  const [splitWidth, setSplitWidth] = useState(Math.floor(maxWidth / 2));
+
   const drag = useRef<{ x: number; w: number } | null>(null);
 
   const startResize = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -13,7 +17,7 @@ export function useSplitResize() {
     if (!drag.current) return;
 
     const next = drag.current.w + (e.clientX - drag.current.x);
-    setSplitWidth(Math.min(560, Math.max(260, next)));
+    setSplitWidth(Math.min(maxWidth, Math.max(minWidth, next)));
   };
 
   const stopResize = (e: React.PointerEvent<HTMLDivElement>) => {

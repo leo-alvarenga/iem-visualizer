@@ -4,7 +4,7 @@ import {
   DeviceSelectorSearch,
   type DeviceSelectorResultsProps,
 } from "./components";
-import { useDeviceSearch, type DeviceOption } from "./hooks";
+import { MIN_QUERY, useDeviceSearch, type DeviceOption } from "./hooks";
 
 export type { DeviceOption };
 
@@ -12,8 +12,10 @@ interface DeviceSelectorProps {
   label: string;
   selected: string[];
   className?: string;
-  options: DeviceOption[];
+  multiple?: boolean;
   errorIds?: Set<string>;
+  options: DeviceOption[];
+  minQueryLength?: number;
   onChange: (ids: string[]) => void;
   getItem: DeviceSelectorResultsProps["getItem"];
 }
@@ -26,17 +28,23 @@ export function DeviceSelector({
   onChange,
   className,
   errorIds,
+  multiple = true,
+  minQueryLength = MIN_QUERY,
 }: DeviceSelectorProps) {
   const { query, setQuery, debounced, ready, matches, total } = useDeviceSearch(
-    { options },
+    { minQueryLength, options },
   );
 
   const toggle = (id: string) => {
-    onChange(
-      selected.includes(id)
-        ? selected.filter((s) => s !== id)
-        : [...selected, id],
-    );
+    if (multiple) {
+      onChange(
+        selected.includes(id)
+          ? selected.filter((s) => s !== id)
+          : [...selected, id],
+      );
+    } else {
+      onChange(selected.includes(id) ? [] : [id]);
+    }
   };
 
   return (
@@ -50,6 +58,7 @@ export function DeviceSelector({
         label={label}
         query={query}
         onQueryChange={setQuery}
+        minQueryLength={minQueryLength}
         selectedCount={selected.length}
       />
 
@@ -60,8 +69,9 @@ export function DeviceSelector({
         matches={matches}
         onToggle={toggle}
         selected={selected}
-        debounced={debounced}
         errorIds={errorIds}
+        debounced={debounced}
+        minQueryLength={minQueryLength}
       />
     </div>
   );

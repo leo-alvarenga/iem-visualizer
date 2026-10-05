@@ -22,7 +22,7 @@ export function useCompareSelection() {
   );
 
   const targetId = useMemo(
-    () => searchParams.get("target") ?? targets[0]?.id ?? "",
+    () => searchParams.get("target") ?? null,
     [searchParams, targets],
   );
 
@@ -43,7 +43,6 @@ export function useCompareSelection() {
     iems: string[],
     target: string | null,
     region?: string,
-    show?: boolean,
   ) => {
     const next = new URLSearchParams();
 
@@ -58,33 +57,17 @@ export function useCompareSelection() {
 
     if (region) next.set("region", region);
     else next.delete("region");
-    if (show === false) next.set("showTarget", "0");
-    else next.delete("showTarget");
 
     setSearchParams(next, { replace: true });
   };
 
-  const selectIems = (ids: string[]) =>
-    updateParams(ids, targetId, undefined, showTarget || undefined);
+  const selectIems = (ids: string[]) => updateParams(ids, targetId, undefined);
 
   const selectTarget = (id: string | null) =>
-    updateParams(selectedIems, id, undefined, showTarget || undefined);
-
-  const toggleTarget = (v: boolean) =>
-    updateParams(
-      selectedIems,
-      targetId,
-      highlightRegion === "none" ? undefined : highlightRegion,
-      v || undefined,
-    );
+    updateParams(selectedIems, id, undefined);
 
   const selectRegion = (id: string) => {
-    updateParams(
-      selectedIems,
-      targetId,
-      id === "none" ? undefined : id,
-      showTarget || undefined,
-    );
+    updateParams(selectedIems, targetId, id === "none" ? undefined : id);
 
     if (id === "none") setZoomIn(false);
   };
@@ -98,13 +81,12 @@ export function useCompareSelection() {
     targetId,
     setZoomIn,
     selectIems,
+    showTarget,
     targetEntry,
     selectTarget,
     selectRegion,
     selectedIems,
     highlightRegion,
     selectedIemEntries,
-    showTarget,
-    toggleTarget,
   };
 }

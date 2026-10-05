@@ -11,7 +11,8 @@ export const ptBR = {
     lang: "Trocar idioma",
   },
   footer: {
-    source: "Respostas de frequência obtidas ao vivo dos revisores do squig.link",
+    source:
+      "Respostas de frequência obtidas ao vivo dos revisores do squig.link",
     tagline: "Lembre-se: ouça música, não o equipamento que está usando",
   },
   compare: {
@@ -26,12 +27,15 @@ export const ptBR = {
     yNormalized: "Amplitude (dB, normalizada)",
     yRaw: "Amplitude (dB)",
     xRaw: "Frequência (Hz)",
+    copyUrl: "Copiar link",
+    copyUrlSuccess: "Link copiado!",
   },
   chart: {
     empty: "Selecione ao menos um fone para plotar o gráfico",
   },
   deviceSelector: {
-    placeholder: "Buscar dispositivos (2+ caracteres)…",
+    placeholderGeneric: "Buscar",
+    placeholder: "Buscar ({{count}}+ caracteres)…",
     minChars: "Digite ao menos {{count}} caracteres para buscar",
     noResults: 'Nenhum dispositivo corresponde a "{{query}}"',
     refine: "Mostrando os primeiros {{shown}} de {{total}}, refine a busca",
