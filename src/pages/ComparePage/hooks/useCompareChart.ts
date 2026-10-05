@@ -28,7 +28,7 @@ export function useCompareChart({
     const opts = buildDisplayEntries(entries).map((e) => ({
       id: e.id,
       name: e.showReviewer
-        ? `${e.brand} ${e.name} — ${e.reviewerName}`
+        ? `${e.brand} ${e.name} | ${e.reviewerName}`
         : `${e.brand} ${e.name}`,
     }));
 

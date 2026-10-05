@@ -65,6 +65,7 @@ export function CompareChartPanel({
           series={series}
           targetName={targetName}
           zoomInHighlight={zoomIn}
+          xTitle={t("compare.xRaw")}
           yTitle={t("compare.yRaw")}
           highlightRegions={highlightRegion}
         />

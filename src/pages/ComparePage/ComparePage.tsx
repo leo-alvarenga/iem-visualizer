@@ -2,7 +2,6 @@ import { useRef, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 
 import { DeviceSelector } from "@/components/DeviceSelector";
-import { OnboardingModal } from "@/components/OnboardingModal";
 import { PageState } from "@/components/PageState";
 import { useFullscreen } from "@/hooks/useFullscreen";
 import { useSquigCurves, useTargetCurve } from "@/hooks/useSquigCurves";
@@ -27,6 +26,8 @@ export function ComparePage() {
     selectedIems,
     highlightRegion,
     selectedIemEntries,
+    showTarget,
+    toggleTarget,
   } = useCompareSelection();
 
   const { splitWidth, startResize, onResize, stopResize } = useSplitResize();
@@ -40,8 +41,8 @@ export function ComparePage() {
   const { series, data, deviceOptions } = useCompareChart({
     curves,
     entries,
-    targetCurve,
-    targetEntry,
+    targetCurve: showTarget ? targetCurve : null,
+    targetEntry: showTarget ? targetEntry : null,
     selectedIemEntries,
   });
 
@@ -55,7 +56,6 @@ export function ComparePage() {
 
   return (
     <>
-      <OnboardingModal />
       <div
         style={{ "--i": 0 } as CSSProperties}
         className="reveal flex flex-1 flex-col gap-6"
@@ -103,8 +103,10 @@ export function ComparePage() {
               zoomIn={zoomIn}
               targets={targets}
               targetId={targetId}
+              showTarget={showTarget}
               onZoomInChange={setZoomIn}
               onTargetChange={selectTarget}
+              onToggleTarget={toggleTarget}
               onRegionChange={selectRegion}
               highlightRegion={highlightRegion}
             />
@@ -123,8 +125,8 @@ export function ComparePage() {
               isFullscreen={isFullscreen}
               onToggleFullscreen={toggle}
               pending={pending || loading}
-              targetName={targetEntry?.name}
               highlightRegion={highlightRegion}
+              targetName={showTarget ? targetEntry?.name : undefined}
             />
           </div>
         </div>

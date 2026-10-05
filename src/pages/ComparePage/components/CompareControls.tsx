@@ -16,7 +16,9 @@ import { CompareField } from "./CompareField";
 type CompareControlsProps = {
   targets: TargetEntry[];
   targetId: string;
+  showTarget: boolean;
   onTargetChange: (id: string) => void;
+  onToggleTarget: (v: boolean) => void;
   highlightRegion: string;
   onRegionChange: (id: string) => void;
   zoomIn: boolean;
@@ -26,33 +28,46 @@ type CompareControlsProps = {
 export function CompareControls({
   targets,
   targetId,
+  showTarget,
   zoomIn,
   onRegionChange,
   onTargetChange,
+  onToggleTarget,
   onZoomInChange,
   highlightRegion,
 }: CompareControlsProps) {
   const { t } = useTranslation();
+  const hasTargets = targets.length > 1;
 
   return (
     <div className="flex flex-wrap items-end gap-x-4 gap-y-3">
-      <div className="min-w-44 flex-1">
-        <CompareField label={t("compare.targetLabel")}>
-          <Select value={targetId} onValueChange={onTargetChange}>
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder={t("compare.targetLabel")} />
-            </SelectTrigger>
+      {hasTargets && (
+        <div className="min-w-44 flex-1">
+          <CompareField label={t("compare.targetLabel")}>
+            <div className="flex items-center gap-2">
+              <Select
+                value={targetId}
+                onValueChange={onTargetChange}
+                disabled={!showTarget}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={t("compare.targetLabel")} />
+                </SelectTrigger>
 
-            <SelectContent>
-              {targets.map((tgt) => (
-                <SelectItem key={tgt.id} value={tgt.id}>
-                  {tgt.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </CompareField>
-      </div>
+                <SelectContent>
+                  {targets.map((tgt) => (
+                    <SelectItem key={tgt.id} value={tgt.id}>
+                      {tgt.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              <Switch checked={showTarget} onCheckedChange={onToggleTarget} />
+            </div>
+          </CompareField>
+        </div>
+      )}
 
       <div className="min-w-44 flex-1">
         <CompareField label={t("compare.regionLabel")}>
