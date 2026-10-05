@@ -11,7 +11,7 @@ export const ptBR = {
     lang: "Trocar idioma",
   },
   footer: {
-    source: "Respostas de frequência do AutoEq, obtidas do squig.link",
+    source: "Respostas de frequência obtidas ao vivo dos revisores do squig.link",
     tagline: "Lembre-se: ouça música, não o equipamento que está usando",
   },
   compare: {
@@ -25,6 +25,7 @@ export const ptBR = {
     regionPlaceholder: "Nenhuma",
     yNormalized: "Amplitude (dB, normalizada)",
     yRaw: "Amplitude (dB)",
+    xRaw: "Frequência (Hz)",
   },
   chart: {
     empty: "Selecione ao menos um fone para plotar o gráfico",
@@ -33,7 +34,7 @@ export const ptBR = {
     placeholder: "Buscar dispositivos (2+ caracteres)…",
     minChars: "Digite ao menos {{count}} caracteres para buscar",
     noResults: 'Nenhum dispositivo corresponde a "{{query}}"',
-    refine: "Mostrando os primeiros {{shown}} de {{total}} — refine a busca",
+    refine: "Mostrando os primeiros {{shown}} de {{total}}, refine a busca",
     selected: "{{count}} selecionados",
   },
   library: {
@@ -73,7 +74,7 @@ export const ptBR = {
       "Uma bancada escura para comparar respostas de frequência de fones intra-auriculares.",
     dataTitle: "Dados",
     dataBody:
-      "As curvas vêm do projeto <autoEq>AutoEq</autoEq>, que espelha medições publicadas no ecossistema <squig>squig.link</squig>. Esta build traz um recorte de fones populares medidos por <oratory>oratory1990</oratory> e <superReview>Super Review</superReview>, regenerado com <code>npm run data</code>.",
+      "Todos os dados de resposta de frequência são obtidos ao vivo do ecossistema de revisores do <squig>squig.link</squig>. O aplicativo faz engenharia reversa da API interna do squig.link — carregando o catálogo de revisores, os phone books individuais e os arquivos de medição brutos sob demanda, sem assets estáticos nem pipeline de dados manual.",
     methodTitle: "Método",
     methodBody1:
       "Todas as curvas são medições cruas em acopladores IEC 60318-4 (GRAS RA0045 ou estilo 711), plotadas em eixo de frequência logarítmico de 20 Hz a 20 kHz. A normalização desloca cada curva para 0 dB em 1 kHz, que é como o squig.link compara tonalidade relativa; SPL absoluto não é exibido.",
@@ -81,7 +82,7 @@ export const ptBR = {
       "A linha de referência é o alvo Harman 2019 in-ear. Resposta de frequência não é a história toda: encaixe, vedação, variação de unidade e diferenças de rig movem essas curvas.",
     creditsTitle: "Créditos",
     credits: {
-      squig: "banco de medições + ferramenta de gráficos",
+      squig: "banco de medições & fonte de dados principal",
       autoEq: "dados abertos + ferramentas de EQ (MIT)",
       oratory: "medições",
       superReview: "medições",
@@ -89,9 +90,12 @@ export const ptBR = {
   },
   onboarding: {
     title: "Bem-vindo ao IEM Graph",
-    compare: "Compare curvas de resposta de frequência de múltiplos fones lado a lado",
-    library: "Explore o banco de dados completo do squig.link e veja medições individuais",
-    targets: "Sobreponha curvas alvo (Harman, DF, etc.) para avaliar tonalidade",
+    compare:
+      "Compare curvas de resposta de frequência de múltiplos fones lado a lado",
+    library:
+      "Explore o banco de dados completo do squig.link e veja medições individuais",
+    targets:
+      "Sobreponha curvas alvo (Harman, DF, etc.) para avaliar tonalidade",
     data: "Todos os dados vêm ao vivo das medições dos revisores do squig.link",
     dismiss: "Entendi",
   },

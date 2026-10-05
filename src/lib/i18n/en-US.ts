@@ -12,13 +12,12 @@ export const enUS = {
   },
   footer: {
     source:
-      "Frequency responses from AutoEq, mirrored from squig.link databases",
+      "Frequency responses fetched live from squig.link reviewer databases",
     tagline: "Remember: listen music, not the equipment you're using",
   },
   compare: {
     title: "Compare",
-    subtitle:
-      "Visualize IEMs frequency responses against a reference target",
+    subtitle: "Visualize IEMs frequency responses against a reference target",
     deviceLabel: "Devices",
     targetLabel: "Target curve",
     regionLabel: "Highlight region",
@@ -26,6 +25,7 @@ export const enUS = {
     regionPlaceholder: "None",
     yNormalized: "Amplitude (dB, normalized)",
     yRaw: "Amplitude (dB)",
+    xRaw: "Frequency (Hz)",
   },
   chart: {
     empty: "Select at least one IEM to plot the chart",
@@ -34,7 +34,7 @@ export const enUS = {
     placeholder: "Search devices (2+ characters)…",
     minChars: "Type at least {{count}} characters to search",
     noResults: 'No devices match "{{query}}"',
-    refine: "Showing the first {{shown}} of {{total}} — refine your search",
+    refine: "Showing the first {{shown}} of {{total}}, refine your search",
     selected: "{{count}} selected",
   },
   library: {
@@ -70,11 +70,10 @@ export const enUS = {
   },
   about: {
     title: "About",
-    intro:
-      "A dark workbench for comparing in-ear monitor frequency responses",
+    intro: "A dark workbench for comparing in-ear monitor frequency responses",
     dataTitle: "Data",
     dataBody:
-      "Curves come from the <autoEq>AutoEq</autoEq> project, which mirrors frequency response measurements published across the <squig>squig.link</squig> ecosystem. This build ships a curated snapshot of popular IEMs measured by <oratory>oratory1990</oratory> and <superReview>Super Review</superReview>, regenerated with <code>npm run data</code>.",
+      "All frequency response data is fetched live from the <squig>squig.link</squig> reviewer ecosystem. The app reverse-engineers squig.link's internal API — loading the reviewer catalog, individual phone books, and raw measurement files on demand, with no bundled assets or manual data pipeline.",
     methodTitle: "Method",
     methodBody1:
       "All curves are raw on-ear coupler measurements on IEC 60318-4 rigs (GRAS RA0045 or 711-style), plotted on a logarithmic frequency axis from 20 Hz to 20 kHz. Normalization shifts each curve so it reads 0 dB at 1 kHz, which is how squig.link compares relative tonality; absolute SPL is not shown",
@@ -82,7 +81,7 @@ export const enUS = {
       "The reference line is the Harman 2019 in-ear target. A frequency response is not the whole story: fit, seal, unit variation, and rig differences all move these curves.",
     creditsTitle: "Credits",
     credits: {
-      squig: "measurement database + graph tool",
+      squig: "measurement database & primary data source",
       autoEq: "open data + EQ tooling (MIT)",
       oratory: "measurements",
       superReview: "measurements",
@@ -91,7 +90,8 @@ export const enUS = {
   onboarding: {
     title: "Welcome to IEM Graph",
     compare: "Compare FR curves for multiple IEMs side by side",
-    library: "Browse the full squig.link database and view individual measurements",
+    library:
+      "Browse the full squig.link database and view individual measurements",
     targets: "Overlay target curves (Harman, DF, etc.) to gauge tonality",
     data: "All data is sourced live from squig.link reviewer measurements",
     dismiss: "Got it",
