@@ -13,6 +13,7 @@ export interface SeriesMeta {
 export type ChartRow = { f: number } & Record<string, number>;
 
 export interface ChartProps {
+  xTitle: string;
   yTitle: string;
   data: ChartRow[];
   targetName?: string;

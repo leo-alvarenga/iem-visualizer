@@ -39,6 +39,28 @@ export function getRangeFromValue(value: number): NamedRange | undefined {
 
 const isValid = (value: unknown) => !isNaN(Number(value));
 
+export function interpolateAt(
+  data: ChartRow[],
+  key: string,
+  index: number,
+): number | null {
+  let lo = index - 1;
+  let hi = index + 1;
+
+  while (lo >= 0 && !isValid(data[lo][key])) lo--;
+  while (hi < data.length && !isValid(data[hi][key])) hi++;
+
+  if (lo < 0 || hi >= data.length) return null;
+
+  const x0 = data[lo].f,
+    y0 = data[lo][key];
+  const x1 = data[hi].f,
+    y1 = data[hi][key];
+  const x = data[index].f;
+
+  return y0 + ((y1 - y0) * (x - x0)) / (x1 - x0);
+}
+
 export function getTooltipValue(
   data: ChartRow[],
   series: SeriesMeta[],
