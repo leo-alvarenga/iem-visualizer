@@ -12,10 +12,12 @@ export function normalizeFr(
   refDb = NORM_REF_DB,
 ): FrPoints {
   if (points.length === 0) return points;
+
   let ref = points[0];
   for (const p of points) {
     if (Math.abs(p[0] - refHz) < Math.abs(ref[0] - refHz)) ref = p;
   }
+
   const offset = refDb - ref[1];
   return points.map(([f, spl]) => [f, Math.round((spl + offset) * 100) / 100]);
 }

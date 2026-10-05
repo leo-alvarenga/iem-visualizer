@@ -10,6 +10,7 @@ export function useSquigCurves(entries: PhoneEntry[]) {
       retry: 1,
       staleTime: Infinity,
       queryKey: ["measurement", entry.id],
+      meta: { deviceName: entry.name },
       queryFn: ({ signal }) => fetchMeasurementCoalesced(entry, signal),
     })),
   });

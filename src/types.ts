@@ -17,19 +17,18 @@ export type SquigSite = {
 
 export type PhoneEntry = {
   id: string;
+  file: string;
   name: string;
   brand: string;
-  file: string;
   price?: string;
-  shopLink?: string;
-  reviewLink?: string;
-  reviewScore?: string;
-  reviewerName: string;
-  reviewerName: string;
-  reviewerUsername: string;
-  dataBaseUrl: string;
   normHz: number;
   normDb: number;
+  shopLink?: string;
+  reviewLink?: string;
+  dataBaseUrl: string;
+  reviewScore?: string;
+  reviewerName: string;
+  reviewerUsername: string;
 };
 
 export type TargetEntry = {

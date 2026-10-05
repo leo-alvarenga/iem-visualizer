@@ -1,4 +1,4 @@
-import type { FrPoints, PhoneEntry, TargetEntry } from "@/types";
+import type { FrPoints, PhoneEntry } from "@/types";
 import { fetchSites, fetchPhoneBook } from "./squig";
 
 export function groupByBrand(entries: PhoneEntry[]): Map<string, PhoneEntry[]> {
@@ -60,38 +60,19 @@ export function meanAbsDeviation(
   return n ? Math.round((sum / n) * 100) / 100 : 0;
 }
 
-export async function fetchAllEntries(): Promise<PhoneEntry[]> {
-  const sites = await fetchSites();
+export async function fetchAllEntries(
+  signal: AbortSignal,
+): Promise<PhoneEntry[]> {
+  const sites = await fetchSites(signal);
+
   const iemSites = sites.flatMap((site) =>
-    site.dbs
-      .filter((db) => db.type === "IEMs")
-      .map((db) => ({ site, db })),
+    site.dbs.filter((db) => db.type === "IEMs").map((db) => ({ site, db })),
   );
+
   const results = await Promise.allSettled(
-    iemSites.map(({ site, db }) => fetchPhoneBook(site, db)),
+    iemSites.map(({ site, db }) => fetchPhoneBook(site, db, signal)),
   );
-  return results.flatMap((r) => (r.status === "fulfilled" ? r.value : []));
+
+  return results.flatMap((r) => (r.status === "fulfilled" ? r.value.entries : []));
 }
 
-function slug(s: string): string {
-  return s
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
-}
-
-export async function fetchTargets(): Promise<TargetEntry[]> {
-  const res = await fetch("https://squig.link/data/phone_book.json");
-  const brands: { name: string; phones: { name: string; file: string }[] }[] =
-    await res.json();
-  return brands
-    .filter((b) => b.name.startsWith("∆"))
-    .flatMap((b) =>
-      b.phones.map((p) => ({
-        id: slug(p.file),
-        name: p.name,
-        file: p.file,
-        dataBaseUrl: "https://squig.link/data/",
-      })),
-    );
-}

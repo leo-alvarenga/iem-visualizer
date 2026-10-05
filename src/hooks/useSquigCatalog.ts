@@ -1,40 +1,38 @@
-import { useQuery, useQueries } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 
 import { fetchSites, fetchPhoneBook } from "@/lib/squig";
-import { fetchTargets } from "@/lib/catalog";
 
 export function useSquigCatalog() {
   const sitesQuery = useQuery({
-    queryKey: ["squig-sites"],
-    queryFn: fetchSites,
     staleTime: 5 * 60_000,
+    queryKey: ["squig-sites"],
+    queryFn: ({ signal }) => fetchSites(signal),
   });
 
   const phonebookQueries = useQueries({
     queries: (sitesQuery.data ?? []).flatMap((site) =>
       site.dbs.map((db) => ({
-        queryKey: ["phonebook", site.username, db.folder],
-        queryFn: () => fetchPhoneBook(site, db),
         staleTime: 5 * 60_000,
+        queryKey: ["phonebook", site.username, db.folder],
+        queryFn: ({ signal }) => fetchPhoneBook(site, db, signal),
       })),
     ),
   });
 
-  const targetsQuery = useQuery({
-    queryKey: ["squig-targets"],
-    queryFn: fetchTargets,
-    staleTime: 5 * 60_000,
-  });
 
-  const entries = phonebookQueries.flatMap((q) => q.data ?? []);
-  const targets = targetsQuery.data ?? [];
+  const entries = phonebookQueries.flatMap((q) => q.data?.entries ?? []);
+  const targets = [
+    ...new Map(
+      phonebookQueries
+        .flatMap((q) => q.data?.targets ?? [])
+        .map((t) => [t.file, t]),
+    ).values(),
+  ];
+
   const loading =
-    sitesQuery.isLoading || phonebookQueries.some((q) => q.isLoading);
-  const error = sitesQuery.isError
-    ? String(sitesQuery.error)
-    : targetsQuery.isError
-      ? String(targetsQuery.error)
-      : null;
+    sitesQuery.isFetching || phonebookQueries.some((q) => q.isFetching);
+
+  const error = sitesQuery.isError ? String(sitesQuery.error) : null;
 
   return { entries, targets, loading, error };
 }
