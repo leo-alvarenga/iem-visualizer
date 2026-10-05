@@ -16,6 +16,7 @@ export function useLibraryChart(params: UseLibraryChartParams) {
   const { entries, targets, deviceId } = params;
 
   const [selectedTargetId, setSelectedTargetId] = useState("");
+  const [showTarget, setShowTarget] = useState(true);
 
   useEffect(() => {
     if (targets.length && !selectedTargetId) setSelectedTargetId(targets[0].id);
@@ -56,7 +57,7 @@ export function useLibraryChart(params: UseLibraryChartParams) {
       raw.push({ meta: m, points: iemResult.points });
     }
 
-    if (targetCurve && selectedTarget) {
+    if (showTarget && targetCurve && selectedTarget) {
       const m = {
         key: "target",
         dashed: true,
@@ -68,12 +69,14 @@ export function useLibraryChart(params: UseLibraryChartParams) {
     }
 
     return { series, data: mergeSeries(raw) };
-  }, [selectedEntry, iemResult, targetCurve, selectedTarget]);
+  }, [selectedEntry, iemResult, targetCurve, selectedTarget, showTarget]);
 
   return {
     selectedEntry,
     selectedTarget,
     setSelectedTargetId,
+    showTarget,
+    setShowTarget,
     iemResult,
     iemPending,
     errorIds,

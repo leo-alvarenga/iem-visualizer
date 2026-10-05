@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import type { PhoneEntry, TargetEntry } from "@/types";
 
 import { DeviceMeta } from "./DeviceMeta";
@@ -18,10 +19,12 @@ export type LibraryDetailPanelProps = {
   hasError?: boolean;
   selectedTarget: TargetEntry | null;
   onSelectTarget: (id: string) => void;
+  showTarget: boolean;
+  onToggleTarget: (v: boolean) => void;
 };
 
 export function LibraryDetailPanel(props: LibraryDetailPanelProps) {
-  const { entry, targets, selectedTarget, onSelectTarget, hasError } = props;
+  const { entry, targets, selectedTarget, onSelectTarget, showTarget, onToggleTarget, hasError } = props;
   const { t } = useTranslation();
 
   return (
@@ -78,26 +81,31 @@ export function LibraryDetailPanel(props: LibraryDetailPanelProps) {
 
       <div className="surface flex flex-col gap-3 p-4">
         <div className="space-y-1.5">
-          <span className="font-code text-xs uppercase tracking-[0.2em] text-(--color-muted)">
-            {t("compare.targetLabel")}
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="font-code text-xs uppercase tracking-[0.2em] text-(--color-muted)">
+              {t("compare.targetLabel")}
+            </span>
+            <Switch checked={showTarget} onCheckedChange={onToggleTarget} />
+          </div>
 
-          <Select
-            value={selectedTarget?.id ?? ""}
-            onValueChange={onSelectTarget}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder={t("compare.targetLabel")} />
-            </SelectTrigger>
+          {targets.length > 1 && (
+            <Select value={selectedTarget?.id ?? ""} onValueChange={onSelectTarget} disabled={!showTarget}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder={t("compare.targetLabel")} />
+              </SelectTrigger>
+              <SelectContent>
+                {targets.map((tgt) => (
+                  <SelectItem key={tgt.id} value={tgt.id}>
+                    {tgt.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
 
-            <SelectContent>
-              {targets.map((tgt) => (
-                <SelectItem key={tgt.id} value={tgt.id}>
-                  {tgt.name}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {targets.length === 1 && selectedTarget && (
+            <p className="font-code text-sm text-(--color-ink)">{selectedTarget.name}</p>
+          )}
         </div>
       </div>
     </aside>

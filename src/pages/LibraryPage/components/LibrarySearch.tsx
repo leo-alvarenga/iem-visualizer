@@ -25,7 +25,7 @@ export function LibrarySearch(props: LibrarySearchProps) {
 
   const entryLabel = (e: DisplayEntry) =>
     e.showReviewer
-      ? `${e.brand} ${e.name} — ${t("library.measuredBy", { reviewer: e.reviewerName })}`
+      ? `${e.brand} ${e.name} | ${t("library.measuredBy", { reviewer: e.reviewerName })}`
       : `${e.brand} ${e.name}`;
 
   return (

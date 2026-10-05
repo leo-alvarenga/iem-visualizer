@@ -26,6 +26,8 @@ export function LibraryPage() {
     selectedEntry,
     selectedTarget,
     setSelectedTargetId,
+    showTarget,
+    setShowTarget,
   } = useLibraryChart({ entries, targets, deviceId });
 
   return (
@@ -84,6 +86,7 @@ export function LibraryPage() {
               <Chart
                 data={data}
                 series={series}
+                xTitle={t("compare.xRaw")}
                 yTitle={t("compare.yRaw")}
                 targetName={selectedTarget?.name}
               />
@@ -95,6 +98,8 @@ export function LibraryPage() {
             entry={selectedEntry}
             selectedTarget={selectedTarget}
             onSelectTarget={setSelectedTargetId}
+            showTarget={showTarget}
+            onToggleTarget={setShowTarget}
             hasError={errorIds.has(selectedEntry.id)}
           />
         </div>
