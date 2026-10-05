@@ -2,24 +2,16 @@ import type { SquigSite, PhoneEntry, TargetEntry } from "@/types";
 import { SQUIG_ROOT, getBaseUrl, getSiteOrigin, slug } from "./urls";
 import { QUERY_TIMEOUT } from "../constants";
 
-function parseTargetFiles(text: string): string[] {
-  const seen = new Set<string>();
-  for (const m of text.matchAll(/files\s*:\s*\[([\s\S]*?)\]/g)) {
-    for (const s of m[1].matchAll(/["']([^"']+)["']/g)) seen.add(s[1]);
-  }
-  return [...seen];
-}
-
 async function fetchSiteConfig(
   origin: string,
   signal: AbortSignal,
-): Promise<{ normHz: number; normDb: number; targetFiles: string[] }> {
+): Promise<{ normHz: number; normDb: number }> {
   try {
     const res = await fetch(`${origin}/config.js`, {
       signal: AbortSignal.any([signal, AbortSignal.timeout(QUERY_TIMEOUT)]),
     });
 
-    if (!res.ok) return { normHz: 500, normDb: 60, targetFiles: [] };
+    if (!res.ok) return { normHz: 500, normDb: 60 };
 
     const text = await res.text();
 
@@ -28,9 +20,9 @@ async function fetchSiteConfig(
       text.match(/default_norm_hz\s*=\s*(\d+)/)?.[1] ?? "500",
     );
 
-    return { normHz: isNaN(hz) ? 500 : hz, normDb: isNaN(db) ? 60 : db, targetFiles: parseTargetFiles(text) };
+    return { normHz: isNaN(hz) ? 500 : hz, normDb: isNaN(db) ? 60 : db };
   } catch {
-    return { normHz: 500, normDb: 60, targetFiles: [] };
+    return { normHz: 500, normDb: 60 };
   }
 }
 
@@ -46,7 +38,7 @@ export async function fetchPhoneBook(
   site: SquigSite,
   db: { type: string; folder: string },
   signal: AbortSignal,
-): Promise<{ entries: PhoneEntry[]; targets: TargetEntry[] }> {
+): Promise<{ entries: PhoneEntry[] }> {
   const baseUrl = getBaseUrl(site, db);
 
   const [res, normConfig] = await Promise.all([
@@ -57,7 +49,7 @@ export async function fetchPhoneBook(
     fetchSiteConfig(getSiteOrigin(site), signal),
   ]);
 
-  if (!res.ok) return { entries: [], targets: [] };
+  if (!res.ok) return { entries: [] };
 
   const brands: {
     name: string;
@@ -107,13 +99,19 @@ export async function fetchPhoneBook(
     }),
   );
 
-  const targetBase = `${getSiteOrigin(site)}/data/`;
-  const targets = normConfig.targetFiles.map((file) => ({
-    file,
-    name: file,
-    id: slug(file),
-    dataBaseUrl: targetBase,
-  }));
+  return { entries };
+}
 
-  return { entries, targets };
+export async function fetchLocalTargets(signal: AbortSignal): Promise<TargetEntry[]> {
+  const res = await fetch("/targets/index.json", {
+    signal: AbortSignal.any([signal, AbortSignal.timeout(QUERY_TIMEOUT)]),
+  });
+  if (!res.ok) return [];
+  const list: { id: string; name: string }[] = await res.json();
+  return list.map(({ id, name }) => ({
+    id,
+    name,
+    file: id,
+    dataBaseUrl: "/targets/",
+  }));
 }

@@ -1,0 +1,138 @@
+[
+  {
+    "id": "harman-ie-2019",
+    "name": "Harman IE 2019",
+    "source": "squig.link",
+    "originalUrl": "https://squig.link/data/Harman%20IE%202019%20Target.txt",
+    "originalFile": "Harman IE 2019 Target",
+    "path": "/targets/harman-ie-2019.txt"
+  },
+  {
+    "id": "super-22",
+    "name": "Super 22",
+    "source": "squig.link",
+    "originalUrl": "https://squig.link/data/Super%2022%20Target.txt",
+    "originalFile": "Super 22 Target",
+    "path": "/targets/super-22.txt"
+  },
+  {
+    "id": "5128df",
+    "name": "∆ 5128DF",
+    "source": "squig.link",
+    "originalUrl": "https://squig.link/data/%E2%88%86%205128DF%20Target.txt",
+    "originalFile": "∆ 5128DF Target",
+    "path": "/targets/5128df.txt"
+  },
+  {
+    "id": "5128df-10db-tilt",
+    "name": "∆ 5128DF - 10dB Tilt",
+    "source": "squig.link",
+    "originalUrl": "https://squig.link/data/%E2%88%86%205128DF%20-%2010dB%20Tilt%20Target.txt",
+    "originalFile": "∆ 5128DF - 10dB Tilt Target",
+    "path": "/targets/5128df-10db-tilt.txt"
+  },
+  {
+    "id": "jm1-10db-tilt",
+    "name": "∆ JM-1 - 10dB Tilt",
+    "source": "squig.link",
+    "originalUrl": "https://squig.link/data/%E2%88%86%20JM-1%20-%2010dB%20Tilt%20Target.txt",
+    "originalFile": "∆ JM-1 - 10dB Tilt Target",
+    "path": "/targets/jm1-10db-tilt.txt"
+  },
+  {
+    "id": "ief-neutral",
+    "name": "IEF Neutral",
+    "source": "precog.squig.link",
+    "originalUrl": "https://precog.squig.link/data/IEF%20Neutral%20Target.txt",
+    "originalFile": "IEF Neutral Target",
+    "path": "/targets/ief-neutral.txt"
+  },
+  {
+    "id": "antdroid",
+    "name": "Antdroid",
+    "source": "precog.squig.link",
+    "originalUrl": "https://precog.squig.link/data/Antdroid%20Target.txt",
+    "originalFile": "Antdroid Target",
+    "path": "/targets/antdroid.txt"
+  },
+  {
+    "id": "precog",
+    "name": "Precog",
+    "source": "precog.squig.link",
+    "originalUrl": "https://precog.squig.link/data/Precog%20Target.txt",
+    "originalFile": "Precog Target",
+    "path": "/targets/precog.txt"
+  },
+  {
+    "id": "rikudougoku",
+    "name": "RikudouGoku",
+    "source": "precog.squig.link",
+    "originalUrl": "https://precog.squig.link/data/RikudouGoku%20Target.txt",
+    "originalFile": "RikudouGoku Target",
+    "path": "/targets/rikudougoku.txt"
+  },
+  {
+    "id": "hbb",
+    "name": "HBB",
+    "source": "precog.squig.link",
+    "originalUrl": "https://precog.squig.link/data/HBB%20Target.txt",
+    "originalFile": "HBB Target",
+    "path": "/targets/hbb.txt"
+  },
+  {
+    "id": "nymz",
+    "name": "Nymz",
+    "source": "precog.squig.link",
+    "originalUrl": "https://precog.squig.link/data/Nymz%20Target.txt",
+    "originalFile": "Nymz Target",
+    "path": "/targets/nymz.txt"
+  },
+  {
+    "id": "diffuse-field",
+    "name": "Diffuse Field",
+    "source": "hbb.squig.link",
+    "originalUrl": "https://hbb.squig.link/data/Diffuse%20Field%20Target.txt",
+    "originalFile": "Diffuse Field Target",
+    "path": "/targets/diffuse-field.txt"
+  },
+  {
+    "id": "free-field",
+    "name": "Free Field",
+    "source": "hbb.squig.link",
+    "originalUrl": "https://hbb.squig.link/data/Free%20Field%20Target.txt",
+    "originalFile": "Free Field Target",
+    "path": "/targets/free-field.txt"
+  },
+  {
+    "id": "etymotic",
+    "name": "Etymotic",
+    "source": "hbb.squig.link",
+    "originalUrl": "https://hbb.squig.link/data/Etymotic%20Target.txt",
+    "originalFile": "Etymotic Target",
+    "path": "/targets/etymotic.txt"
+  },
+  {
+    "id": "crinacle-2023",
+    "name": "Crinacle 2023 Adjusted",
+    "source": "hbb.squig.link",
+    "originalUrl": "https://hbb.squig.link/data/Crinacle%202023%20Adjusted%20Target.txt",
+    "originalFile": "Crinacle 2023 Adjusted Target",
+    "path": "/targets/crinacle-2023.txt"
+  },
+  {
+    "id": "bad-guy-2022",
+    "name": "Bad Guy 2022",
+    "source": "hbb.squig.link",
+    "originalUrl": "https://hbb.squig.link/data/Bad%20Guy%202022%20Target.txt",
+    "originalFile": "Bad Guy 2022 Target",
+    "path": "/targets/bad-guy-2022.txt"
+  },
+  {
+    "id": "mrs",
+    "name": "MRS",
+    "source": "hbb.squig.link",
+    "originalUrl": "https://hbb.squig.link/data/MRS%20Target.txt",
+    "originalFile": "MRS Target",
+    "path": "/targets/mrs.txt"
+  }
+]
