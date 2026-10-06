@@ -62,6 +62,7 @@ export const ptBR = {
       "Diferença absoluta média em relação à curva alvo Harman 2019 (20 Hz - 10 kHz). Quanto menor, mais próximo do alvo.",
     notFound: "Esse fone não está na biblioteca",
     backToLibrary: "Voltar para a biblioteca",
+    noDeviation: "Sem desvio de curva alvo atual",
   },
   ranges: {
     "sub-bass": "Sub-graves",

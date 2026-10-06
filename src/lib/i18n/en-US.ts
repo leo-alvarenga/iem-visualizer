@@ -61,6 +61,7 @@ export const enUS = {
       "Mean absolute difference from the Harman 2019 target (20 Hz - 10 kHz). Lower is closer to the target",
     notFound: "That IEM isn't in the library",
     backToLibrary: "Back to library",
+    noDeviation: "No deviation from current target",
   },
   ranges: {
     "sub-bass": "Sub-bass",

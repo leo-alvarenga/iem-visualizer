@@ -1,9 +1,15 @@
 import type { XAxisProps, YAxisProps } from "recharts";
 
-import { DBS_TICKS, FREQ_MAX, FREQ_MIN, FREQ_TICKS } from "@/lib/constants";
+import {
+  DBS_TICKS,
+  FREQ_MAX,
+  FREQ_MIN,
+  FREQ_TICKS_BY_SCREEN,
+} from "@/lib/constants";
 import type { RangeCategory } from "@/types";
 
 import { formatFreq, getHighlightRange } from "../Chart.utils";
+import { getScreenSize } from "@/lib/utils";
 
 const tickStyle = { fontSize: 11 };
 
@@ -29,8 +35,9 @@ export function useChartAxes({
     tickMargin: 8,
     tick: tickStyle,
     allowDataOverflow: true,
-    ticks: FREQ_TICKS,
+    interval: "preserveStartEnd",
     tickFormatter: formatFreq,
+    ticks: FREQ_TICKS_BY_SCREEN[getScreenSize()],
 
     domain: zoomInHighlight
       ? (getHighlightRange(highlightRegions) ?? [FREQ_MIN, FREQ_MAX])
@@ -45,7 +52,7 @@ export function useChartAxes({
   };
 
   const verticalAxis: YAxisProps = {
-    width: 64,
+    width: 48,
     axisLine: true,
     tickLine: true,
     tick: tickStyle,

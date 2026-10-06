@@ -139,7 +139,7 @@ export function ComparePage() {
             className="hidden cursor-col-resize bg-(--color-rule) transition-colors hover:bg-(--color-accent) lg:block lg:w-1.5"
           />
 
-          <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-4 lg:h-[72vh]">
+          <div className="flex min-h-96 min-w-0 flex-1 flex-col gap-4 lg:h-[72vh]">
             <CompareControls
               zoomIn={zoomIn}
               onZoomInChange={setZoomIn}

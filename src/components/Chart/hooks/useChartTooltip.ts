@@ -44,25 +44,24 @@ export function useChartTooltip({
     const key = series.find((s) => s.label === name)?.key;
     const isActiveSeries = activeSeries === key;
 
-    const deviation = targetValue ? actualValue - targetValue : null;
+    const deviation = targetValue ? actualValue - targetValue || null : null;
 
     const percent =
       targetValue && deviation
-        ? Math.round((deviation / targetValue) * 100)
+        ? ((deviation / targetValue) * 100).toFixed(2)
         : null;
 
-    // .ts file: createElement avoids JSX syntax (identical element to <ChartTooltipContent ... />)
     return [
       createElement(ChartTooltipContent, {
-        name: name as NameType,
-        stroke: item?.stroke,
-        value: actualValue,
-        frequency: f,
-        currentFrequency: item?.payload?.f,
-        targetName,
-        isActiveSeries,
-        deviation,
         percent,
+        deviation,
+        targetName,
+        frequency: f,
+        isActiveSeries,
+        value: actualValue,
+        stroke: item?.stroke,
+        name: name as NameType,
+        currentFrequency: item?.payload?.f,
       }),
       null,
     ];

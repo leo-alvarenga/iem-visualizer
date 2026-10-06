@@ -4,7 +4,7 @@ export function useSplitResize() {
   const maxWidth = window.innerWidth * 0.8;
   const minWidth = window.innerWidth * 0.2;
 
-  const [splitWidth, setSplitWidth] = useState(Math.floor(maxWidth / 2));
+  const [splitWidth, setSplitWidth] = useState(Math.floor(maxWidth / 1 / 3));
 
   const drag = useRef<{ x: number; w: number } | null>(null);
 

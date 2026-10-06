@@ -50,7 +50,7 @@ export function Chart({
   }
 
   return (
-    <ResponsiveContainer ref={ref} width="100%" height="100%">
+    <ResponsiveContainer ref={ref} width="100%" height="100%" minHeight={300}>
       <LineChart data={data} cursor="crosshair">
         <CartesianGrid
           stroke="var(--color-rule)"
@@ -62,21 +62,23 @@ export function Chart({
         <YAxis {...verticalAxis} />
 
         <Tooltip
-          offset={40}
+          offset={80}
           filterNull={false}
           formatter={tooltipFormatter}
           cursor={{ stroke: "var(--color-muted)", strokeDasharray: "3 3" }}
+
           labelStyle={{
-            color: "var(--color-muted)",
+            fontSize: 10,
             marginBottom: 4,
-            fontSize: 14,
+            color: "var(--color-muted)",
           }}
+
           labelFormatter={(label) => {
             const f = Number(label);
             const range = getRangeFromValue(f);
 
             return (
-              <span className="inline-flex gap-1 items-center pb-1 w-full border-b border-b-(--series-target)">
+              <span className="inline-flex flex-wrap gap-1 items-center pb-1 w-full border-b border-b-(--series-target)">
                 <span className="text-(--color-accent) font-bold">{`${formatFreq(f)}Hz`}</span>
 
                 {range && (
@@ -85,11 +87,17 @@ export function Chart({
               </span>
             );
           }}
+
           contentStyle={{
-            fontSize: 12,
+            fontSize: 10,
             borderRadius: 0,
+            minWidth: "10vw",
+            maxWidth: "30vw",
+            textWrap: "wrap",
+            overflow: "hidden",
+            wordBreak: "break-word",
+            backgroundColor: "var(--color-bg2)",
             border: "1px solid var(--series-target)",
-            backgroundColor: "var(--color-paper-2)",
           }}
         />
 

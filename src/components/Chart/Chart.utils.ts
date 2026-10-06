@@ -7,7 +7,14 @@ import type { NamedRange, RangeCategory } from "@/types";
 import type { ChartRow, SeriesMeta } from "./Chart.types";
 
 export function formatFreq(f: number): string {
-  return f >= 1000 ? `${(f / 1000).toFixed(3)}k` : String(f);
+  if (f < 1000) return String(f);
+  let reduced: string | number = f / 1000;
+
+  if (f % 1000 !== 0) {
+    reduced = reduced.toFixed(1);
+  }
+
+  return `${reduced}k`;
 }
 
 export function getHighlightRange(
