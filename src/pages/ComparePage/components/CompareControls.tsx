@@ -13,17 +13,21 @@ import { FREQ_RANGES } from "@/lib/constants";
 import { CompareField } from "./CompareField";
 
 type CompareControlsProps = {
-  highlightRegion: string;
   zoomIn: boolean;
+  inspect: boolean;
+  highlightRegion: string;
   onRegionChange: (id: string) => void;
   onZoomInChange: (checked: boolean) => void;
+  onInspectChange: (checked: boolean) => void;
 };
 
 export function CompareControls({
   zoomIn,
+  inspect,
   onRegionChange,
   onZoomInChange,
   highlightRegion,
+  onInspectChange,
 }: CompareControlsProps) {
   const { t } = useTranslation();
 
@@ -59,6 +63,12 @@ export function CompareControls({
           onCheckedChange={onZoomInChange}
           disabled={!highlightRegion || highlightRegion === "none"}
         />
+      </label>
+
+      <label className="flex items-center justify-between gap-3 pb-2 text-sm">
+        {t("compare.inspectLabel")}
+
+        <Switch checked={inspect} onCheckedChange={onInspectChange} />
       </label>
     </div>
   );

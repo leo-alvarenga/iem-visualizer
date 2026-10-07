@@ -14,7 +14,9 @@ function readIds(param: string | null, fallback: string[]): string[] {
 export function useCompareSelection() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { entries, targets, loading, error } = useSquigCatalog();
+
   const [zoomIn, setZoomIn] = useState(false);
+  const [inspect, setInspect] = useState(true);
 
   const selectedIems = useMemo(
     () => readIds(searchParams.get("device"), []),
@@ -79,7 +81,9 @@ export function useCompareSelection() {
     targets,
     loading,
     targetId,
+    inspect,
     setZoomIn,
+    setInspect,
     selectIems,
     showTarget,
     targetEntry,

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "lucide-react";
+import { Camera, Link } from "lucide-react";
+import { toPng } from "html-to-image";
 import { toast } from "sonner";
 
 import { DeviceSelector } from "@/components/DeviceSelector";
@@ -20,9 +21,11 @@ export function ComparePage() {
     entries,
     targets,
     loading,
+    inspect,
     targetId,
     setZoomIn,
     selectIems,
+    setInspect,
     targetEntry,
     selectTarget,
     selectRegion,
@@ -101,6 +104,28 @@ export function ComparePage() {
 
             {t("compare.copyUrl")}
           </Button>
+
+          <Button
+            size="sm"
+            variant="outline"
+            className="cursor-pointer"
+            onClick={async () => {
+              if (!chartRef.current) return;
+              await document.fonts.ready;
+              const dataUrl = await toPng(chartRef.current, {
+                cacheBust: true,
+              });
+              const a = document.createElement("a");
+              a.href = dataUrl;
+              a.download = "iem-chart.png";
+              a.click();
+              a.remove();
+            }}
+          >
+            <Camera />
+
+            {t("compare.screenshot")}
+          </Button>
         </header>
 
         <div className="flex h-full flex-1 flex-col-reverse gap-4 lg:flex-row">
@@ -142,7 +167,9 @@ export function ComparePage() {
           <div className="flex min-h-96 min-w-0 flex-1 flex-col gap-4 lg:h-[72vh]">
             <CompareControls
               zoomIn={zoomIn}
+              inspect={inspect}
               onZoomInChange={setZoomIn}
+              onInspectChange={setInspect}
               onRegionChange={selectRegion}
               highlightRegion={highlightRegion}
             />
@@ -158,6 +185,7 @@ export function ComparePage() {
               ref={chartRef}
               series={series}
               zoomIn={zoomIn}
+              inspect={inspect}
               isFullscreen={isFullscreen}
               onToggleFullscreen={toggle}
               pending={pending || loading}

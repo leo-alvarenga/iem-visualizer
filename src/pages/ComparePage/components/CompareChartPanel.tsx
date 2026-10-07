@@ -5,14 +5,15 @@ import { Maximize, Minimize } from "lucide-react";
 import { Chart, type ChartRow, type SeriesMeta } from "@/components/Chart";
 
 type CompareChartPanelProps = {
-  ref?: Ref<HTMLDivElement>;
-  data: ChartRow[];
-  series: SeriesMeta[];
-  targetName?: string;
   zoomIn: boolean;
-  highlightRegion: string;
+  data: ChartRow[];
   pending: boolean;
+  inspect?: boolean;
+  targetName?: string;
+  series: SeriesMeta[];
   isFullscreen: boolean;
+  highlightRegion: string;
+  ref?: Ref<HTMLDivElement>;
   onToggleFullscreen: () => void;
 };
 
@@ -21,6 +22,7 @@ export function CompareChartPanel({
   data,
   series,
   zoomIn,
+  inspect,
   pending,
   targetName,
   isFullscreen,
@@ -63,6 +65,7 @@ export function CompareChartPanel({
         <Chart
           data={data}
           series={series}
+          inspect={inspect}
           targetName={targetName}
           zoomInHighlight={zoomIn}
           xTitle={t("compare.xRaw")}
