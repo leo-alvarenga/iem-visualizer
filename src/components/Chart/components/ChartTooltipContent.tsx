@@ -1,4 +1,5 @@
-import { ArrowBigLeft, Target } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Target } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import type { NameType } from "recharts/types/component/DefaultTooltipContent";
 
@@ -6,23 +7,23 @@ interface ChartTooltipContentProps {
   name: NameType;
   stroke?: string;
   value: number;
+  index: number;
   frequency: number | null;
   currentFrequency?: number;
   targetName?: string;
-  isActiveSeries: boolean;
   deviation: number | null;
   percent: string | number | null;
 }
 
 export function ChartTooltipContent({
   name,
+  index,
   value,
   stroke,
   percent,
   frequency,
   deviation,
   targetName,
-  isActiveSeries,
   currentFrequency,
 }: ChartTooltipContentProps) {
   const { t } = useTranslation();
@@ -33,7 +34,12 @@ export function ChartTooltipContent({
   const hasDeviation = name !== targetName && deviation && percent;
 
   return (
-    <>
+    <span
+      className={cn(
+        "flex flex-col px-2 pt-2 text-(--color-muted) bg-(--color-overlay0)/20 -mb-2",
+        index === 0 && "-mt-2",
+      )}
+    >
       <span
         style={{ color: stroke, fontSize: 10 }}
         className="inline-flex gap-1 items-center"
@@ -47,11 +53,7 @@ export function ChartTooltipContent({
           />
         )}
 
-        <span className={isActiveSeries ? "underline font-bold" : ""}>
-          {name}
-        </span>
-
-        {isActiveSeries && <ArrowBigLeft size={16} />}
+        <span>{name}</span>
       </span>
 
       <span
@@ -74,6 +76,6 @@ export function ChartTooltipContent({
           )}
         </span>
       </span>
-    </>
+    </span>
   );
 }

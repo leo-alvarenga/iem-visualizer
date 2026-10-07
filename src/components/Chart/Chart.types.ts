@@ -16,6 +16,7 @@ export interface ChartProps {
   xTitle: string;
   yTitle: string;
   data: ChartRow[];
+  inspect?: boolean;
   targetName?: string;
   series: SeriesMeta[];
   ref?: Ref<HTMLDivElement>;
