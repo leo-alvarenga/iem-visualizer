@@ -24,11 +24,11 @@ export function LibraryPage() {
     errorIds,
     iemResult,
     iemPending,
+    showTarget,
     selectedEntry,
     selectedTarget,
-    setSelectedTargetId,
-    showTarget,
     setShowTarget,
+    setSelectedTargetId,
   } = useLibraryChart({ entries, targets: allTargets, deviceId });
 
   return (
@@ -85,6 +85,7 @@ export function LibraryPage() {
 
             <div className="min-h-0 flex-1 p-4">
               <Chart
+                inspect
                 data={data}
                 series={series}
                 xTitle={t("compare.xRaw")}
