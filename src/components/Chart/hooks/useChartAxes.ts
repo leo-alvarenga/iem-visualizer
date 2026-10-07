@@ -27,12 +27,12 @@ export function useChartAxes({
   highlightRegions,
 }: UseChartAxesParams) {
   const horizontalAxis: XAxisProps = {
-    axisLine: true,
-    tickLine: true,
     dataKey: "f",
     scale: "log",
-    type: "number",
     tickMargin: 8,
+    tickLine: true,
+    axisLine: true,
+    type: "number",
     tick: tickStyle,
     allowDataOverflow: true,
     interval: "preserveStartEnd",

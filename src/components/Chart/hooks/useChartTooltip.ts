@@ -10,20 +10,18 @@ interface UseChartTooltipParams {
   data: ChartRow[];
   series: SeriesMeta[];
   targetName?: string;
-  activeSeries?: string;
 }
 
 export function useChartTooltip({
   data,
   series,
   targetName,
-  activeSeries,
 }: UseChartTooltipParams) {
   return (
     value: unknown,
-    name?: NameType,
-    item?: TooltipPayloadEntry,
-    _?: unknown,
+    name: NameType | undefined,
+    item: TooltipPayloadEntry | undefined,
+    index: number,
     payload?: TooltipPayload,
   ) => {
     const [actualValue, f] = getTooltipValue(data, series, value, name, item);
@@ -41,9 +39,6 @@ export function useChartTooltip({
       item,
     );
 
-    const key = series.find((s) => s.label === name)?.key;
-    const isActiveSeries = activeSeries === key;
-
     const deviation = targetValue ? actualValue - targetValue || null : null;
 
     const percent =
@@ -53,11 +48,11 @@ export function useChartTooltip({
 
     return [
       createElement(ChartTooltipContent, {
+        index,
         percent,
         deviation,
         targetName,
         frequency: f,
-        isActiveSeries,
         value: actualValue,
         stroke: item?.stroke,
         name: name as NameType,
