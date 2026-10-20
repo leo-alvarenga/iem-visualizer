@@ -23,16 +23,18 @@ export function ComparePage() {
     loading,
     inspect,
     targetId,
+    hiddenIds,
     setZoomIn,
     selectIems,
     setInspect,
+    showTarget,
     targetEntry,
     selectTarget,
     selectRegion,
     selectedIems,
+    toggleHidden,
     highlightRegion,
     selectedIemEntries,
-    showTarget,
   } = useCompareSelection();
 
   const { splitWidth, startResize, onResize, stopResize } = useSplitResize();
@@ -60,6 +62,11 @@ export function ComparePage() {
     targetCurve: showTarget ? targetCurve : null,
     targetEntry: showTarget ? targetEntry : null,
   });
+
+  const visibleSeries = useMemo(
+    () => series.filter((s) => !hiddenIds.has(s.key.split(":")[1])),
+    [series, hiddenIds],
+  );
 
   if (!entries.length && loading) {
     return (
@@ -135,6 +142,8 @@ export function ComparePage() {
           >
             <DeviceSelector
               errorIds={errorIds}
+              hiddenIds={hiddenIds}
+              onToggleHidden={toggleHidden}
               onChange={selectIems}
               options={deviceOptions}
               selected={selectedIems}
@@ -181,15 +190,15 @@ export function ComparePage() {
             )}
 
             <CompareChartPanel
-              data={data}
               ref={chartRef}
-              series={series}
+              series={visibleSeries}
               zoomIn={zoomIn}
               inspect={inspect}
               isFullscreen={isFullscreen}
               onToggleFullscreen={toggle}
               pending={pending || loading}
               highlightRegion={highlightRegion}
+              data={data}
               targetName={showTarget ? targetEntry?.name : undefined}
             />
           </div>

@@ -12,6 +12,8 @@ function readIds(param: string | null, fallback: string[]): string[] {
 }
 
 export function useCompareSelection() {
+  const [hiddenIds, setHiddenIds] = useState<Set<string>>(new Set());
+
   const [searchParams, setSearchParams] = useSearchParams();
   const { entries, targets, loading, error } = useSquigCatalog();
 
@@ -40,6 +42,17 @@ export function useCompareSelection() {
     () => entries.filter((e) => selectedIems.includes(e.id)),
     [entries, selectedIems],
   );
+
+  const toggleHidden = (id: string) => {
+    setHiddenIds((ids) => {
+      const next = new Set(ids);
+
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+
+      return next;
+    });
+  };
 
   const updateParams = (
     iems: string[],
@@ -82,6 +95,7 @@ export function useCompareSelection() {
     loading,
     targetId,
     inspect,
+    hiddenIds,
     setZoomIn,
     setInspect,
     selectIems,
@@ -90,6 +104,7 @@ export function useCompareSelection() {
     selectTarget,
     selectRegion,
     selectedIems,
+    toggleHidden,
     highlightRegion,
     selectedIemEntries,
   };

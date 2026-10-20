@@ -1,5 +1,7 @@
 import { useTranslation } from "react-i18next";
+import { Eye, EyeOff } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils";
 import {
   Tooltip,
   TooltipContent,
@@ -16,6 +18,8 @@ export type DeviceSelectorResultsProps = {
   errorIds?: Set<string>;
   minQueryLength: number;
   onToggle: (id: string) => void;
+  hiddenIds?: Set<string>;
+  onToggleHidden?: (id: string) => void;
   getItem: (id: string) => DeviceOption | undefined;
 };
 
@@ -27,10 +31,32 @@ export function DeviceSelectorResults({
   errorIds,
   selected,
   onToggle,
+  hiddenIds,
+  onToggleHidden,
   debounced,
   minQueryLength,
 }: DeviceSelectorResultsProps) {
   const { t } = useTranslation();
+
+  const renderHideToggle = (id: string) => {
+    if (!onToggleHidden) return null;
+
+    const hidden = hiddenIds?.has(id) ?? false;
+
+    return (
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onToggleHidden(id);
+        }}
+        aria-label={hidden ? "Show" : "Hide"}
+        className="ml-auto shrink-0 cursor-pointer text-(--color-muted) hover:text-(--color-accent)"
+      >
+        {hidden ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+      </button>
+    );
+  };
 
   return (
     <div className="min-h-0 flex-1 overflow-y-auto">
@@ -62,14 +88,20 @@ export function DeviceSelectorResults({
                 </Tooltip>
               );
             }
+            const hidden = hiddenIds?.has(opt) ?? false;
+
             return (
               <label
                 key={opt}
-                className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground"
+                className={cn(
+                  "flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground",
+                  hidden && "opacity-50",
+                )}
                 onClick={() => onToggle(opt)}
               >
                 <Checkbox checked onCheckedChange={() => onToggle(opt)} />
                 <span className="truncate">{item.name}</span>
+                {renderHideToggle(opt)}
               </label>
             );
           })}
@@ -101,17 +133,24 @@ export function DeviceSelectorResults({
               );
             }
 
+            const isSelected = selected.includes(opt.id);
+            const hidden = hiddenIds?.has(opt.id) ?? false;
+
             return (
               <label
                 key={opt.id}
-                className="flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground"
                 onClick={() => onToggle(opt.id)}
+                className={cn(
+                  "flex cursor-pointer items-center gap-2.5 rounded-md px-2 py-1.5 text-sm hover:bg-accent hover:text-accent-foreground",
+                  isSelected && hidden && "opacity-50",
+                )}
               >
                 <Checkbox
-                  checked={selected.includes(opt.id)}
+                  checked={isSelected}
                   onClick={(e) => e.stopPropagation()}
                 />
                 <span className="truncate">{opt.name}</span>
+                {isSelected && renderHideToggle(opt.id)}
               </label>
             );
           })}

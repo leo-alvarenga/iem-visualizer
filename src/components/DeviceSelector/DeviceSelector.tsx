@@ -14,6 +14,8 @@ interface DeviceSelectorProps {
   className?: string;
   multiple?: boolean;
   errorIds?: Set<string>;
+  hiddenIds?: Set<string>;
+  onToggleHidden?: (id: string) => void;
   options: DeviceOption[];
   minQueryLength?: number;
   onChange: (ids: string[]) => void;
@@ -28,6 +30,8 @@ export function DeviceSelector({
   onChange,
   className,
   errorIds,
+  hiddenIds,
+  onToggleHidden,
   multiple = true,
   minQueryLength = MIN_QUERY,
 }: DeviceSelectorProps) {
@@ -70,6 +74,8 @@ export function DeviceSelector({
         onToggle={toggle}
         selected={selected}
         errorIds={errorIds}
+        hiddenIds={hiddenIds}
+        onToggleHidden={onToggleHidden}
         debounced={debounced}
         minQueryLength={minQueryLength}
       />
